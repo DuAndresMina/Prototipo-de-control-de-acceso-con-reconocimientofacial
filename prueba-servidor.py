@@ -4,6 +4,7 @@ import mysql.connector
 import json
 import base64
 from datetime import datetime  # Importa la clase datetime
+import pytz
 
 app = Flask(__name__)
 
@@ -90,6 +91,9 @@ def add_person_to_database():
 def compare_with_database():
     try:
         file = request.files['image']
+
+        # Leer los datos binarios de la imagen directamente desde la solicitud
+        image_data = file.read()
         
         # Cargar la imagen para comparación
         image = face_recognition.load_image_file(file)
@@ -118,11 +122,14 @@ def compare_with_database():
             # Si se encuentra una coincidencia, agrega el resultado a la lista de resultados
             if any(comparison_results):
                 # Registra la fecha y hora de la autenticación
+                colombia_timezone = pytz.timezone('America/Bogota')
+                current_time_colombia = datetime.now(colombia_timezone)
                 current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                formatted_time_colombia = current_time_colombia.strftime('%Y-%m-%d %H:%M:%S')
 
                 # Inserta el registro de autenticación en la base de datos
                 cursor.execute("INSERT INTO registro_autenticaciones (persona_id, fecha_hora) VALUES (%s, %s)",
-                               (person_id, current_datetime))
+                               (person_id, formatted_time_colombia))
                 connection.commit()
 
                 # Devuelve la respuesta
@@ -134,10 +141,24 @@ def compare_with_database():
         # Si no se encontraron coincidencias en la base de datos
         results.append({"message": "Persona no autorizada."})
 
-        # Almacenar el encoding y la imagen en la tabla intentos_autenticacion
-        encoding_json = json.dumps(face_encoding_to_compare[0].tolist())
-        image_blob = file.read()
-        cursor.execute("INSERT INTO intentos_autenticacion (encoding, imagen) VALUES (%s, %s)", (encoding_json, image_blob))
+        # Registra la fecha y hora de la autenticación
+        colombia_timezone = pytz.timezone('America/Bogota')
+        current_time_colombia = datetime.now(colombia_timezone)
+        current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        formatted_time_colombia = current_time_colombia.strftime('%Y-%m-%d %H:%M:%S')
+
+        # Convertir la matriz NumPy a una lista de Python
+        face_encoding_list = face_encoding_to_compare[0].tolist()
+
+        # Luego, convierte la lista en una cadena JSON
+        face_encoding_json = json.dumps(face_encoding_list)
+
+        # Codificar la imagen en formato base64
+        image_base64 = base64.b64encode(image_data).decode()
+
+        cursor.execute("INSERT INTO intentos_autenticacion (encoding, imagen, fecha_hora) VALUES (%s, %s, %s)",(face_encoding_json, image_base64, current_datetime))
+
+        connection.commit()
 
         cursor.close()
         connection.close()
