@@ -1,0 +1,20 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Foto</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for persona in personas %}
+    <tr>
+      <td>{{ persona.id }}</td>
+      <td>{{ persona.nombre }}</td>
+      <td>
+        <img src="data:image/jpeg;base64,{{ persona.image }}" alt="Foto de {{ persona.nombre }}" width="450">
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
