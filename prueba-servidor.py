@@ -55,7 +55,7 @@ def is_person_in_database(new_face_encoding, connection):
 @app.route('/add_person', methods=['POST'])
 def add_person_to_database():
     try:
-        file = request.files['image']
+        file = request.files['imageFile']
 
         # Leer los datos binarios de la imagen directamente desde la solicitud
         image_data = file.read()
