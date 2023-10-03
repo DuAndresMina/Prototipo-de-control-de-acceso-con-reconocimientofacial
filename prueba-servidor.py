@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import face_recognition
 import mysql.connector
 import json
+from flask import Flask, render_template
 import base64
 from datetime import datetime  # Importa la clase datetime
 import pytz
@@ -19,6 +20,16 @@ db_config = {
 # Conectar a la base de datos
 def connect_to_database():
     return mysql.connector.connect(**db_config)
+
+# Crea una función para obtener los datos de la tabla "personas"
+def get_personas():
+    connection = connect_to_database()
+    cursor = connection.cursor(dictionary=True)  # Usar dictionary=True para obtener resultados como diccionarios
+    cursor.execute("SELECT id, nombre, image FROM personas")
+    personas = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return personas
 
 # Función para verificar si la persona ya está en la base de datos
 def is_person_in_database(new_face_encoding, connection):
@@ -166,5 +177,16 @@ def compare_with_database():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/mostrar_personas')
+def mostrar_personas():
+    # Obtén los datos de la base de datos
+    personas = get_personas()
+    
+    # Renderiza la plantilla HTML y pasa los datos a la plantilla
+
+
+
+    return render_template('personas.html', personas=personas)
+
 if __name__ == '__main__':
-    app.run(host='192.168.1.13', port=8000)
+    app.run(host='192.168.1.21', port=8000)
