@@ -51,6 +51,27 @@ def is_person_in_database(new_face_encoding, connection):
 
     return False
 
+
+@app.route('/hello')
+def hello():
+    return 'Servidor Flask en funcionamiento'
+
+@app.route('/check_connection', methods=['POST'])
+def check_connection():
+    data = request.json
+    if 'esp32_id' in data:
+        esp32_id = data['esp32_id']
+        # Realiza aquí cualquier lógica de verificación que desees
+        # Puedes verificar si el esp32_id es válido y si se conectó correctamente
+        # Devuelve una respuesta apropiada según la verificación
+        if esp32_id == 'esp32cam123':
+            response = {'status': 'Conexión exitosa'}
+        else:
+            response = {'status': 'Error de conexión'}
+    else:
+        response = {'error': 'Se requiere un esp32_id en la solicitud'}
+    return jsonify(response)
+
 # Ruta para cargar una imagen de una persona y guardar sus características faciales en la base de datos
 @app.route('/add_person', methods=['POST'])
 def add_person_to_database():
