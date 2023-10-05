@@ -36,13 +36,13 @@ const char* ssid = "FAMILIA PC";
 const char* password = "L782019JT";
 
 // Dirección del servidor o dirección IP del servidor
-const char* serverName = "192.168.1.13";
+const char* serverName = "api.facetag.enerfris.com";
 
 // Ruta del archivo en el servidor
 const char* serverPath = "/add_person";
 
 // Puerto del servidor
-const int serverPort = 5000;
+const int serverPort = 80;
 
 // Variable para controlar si el flash LED está encendido o apagado
 
