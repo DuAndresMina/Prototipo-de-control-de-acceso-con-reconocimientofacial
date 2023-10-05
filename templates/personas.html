@@ -1,20 +1,30 @@
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Foto</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for persona in personas %}
-    <tr>
-      <td>{{ persona.id }}</td>
-      <td>{{ persona.nombre }}</td>
-      <td>
-        <img src="data:image/jpeg;base64,{{ persona.image }}" alt="Foto de {{ persona.nombre }}" width="100">
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personas</title>
+</head>
+<body>
+    <h1>Información de Personas</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(ids|length) %}
+            <tr>
+                <td>{{ ids[i] }}</td>
+                <td>{{ nombres[i] }}</td>
+                <td>
+                    <img src="data:image/jpeg;base64,{{ imagenes_base64[i] }}" alt="Imagen" style="width: 100px; height: auto;" />
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
