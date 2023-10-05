@@ -6,6 +6,7 @@ from flask import Flask, render_template
 import base64
 from datetime import datetime  # Importa la clase datetime
 import pytz
+from mysql.connector import Error
 
 app = Flask(__name__)
 
@@ -21,15 +22,6 @@ db_config = {
 def connect_to_database():
     return mysql.connector.connect(**db_config)
 
-# Crea una función para obtener los datos de la tabla "personas"
-def get_personas():
-    connection = connect_to_database()
-    cursor = connection.cursor(dictionary=True)  # Usar dictionary=True para obtener resultados como diccionarios
-    cursor.execute("SELECT id, nombre, image FROM personas")
-    personas = cursor.fetchall()
-    cursor.close()
-    connection.close()
-    return personas
 
 # Función para verificar si la persona ya está en la base de datos
 def is_person_in_database(new_face_encoding, connection):
@@ -52,9 +44,58 @@ def is_person_in_database(new_face_encoding, connection):
     return False
 
 
-@app.route('/hello')
-def hello():
-    return 'Servidor Flask en funcionamiento'
+# Función para obtener la información de las personas desde la base de datos
+def get_personas_info():
+    personas_info = []
+    try:
+        conn = connect_to_database()  # Usa tu función existente para la conexión
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT id, nombre, image FROM personas")
+        resultados = cursor.fetchall()
+        for resultado in resultados:
+            persona = {
+                "id": resultado["id"],
+                "nombre": resultado["nombre"],
+                "imagen": (resultado["image"]).decode('utf-8')
+            }
+            personas_info.append(persona)
+    except Error as e:
+        print("Error en la consulta:", e)
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+    return personas_info
+
+
+
+@app.route('/personas')
+def mostrar_personas():
+    personas_info = get_personas_info()
+    return render_template('personas.html', personas_info=personas_info)
+
+
+def get_table_names():
+    table_names = []
+    try:
+        conn = connect_to_database()  # Usa tu función existente para la conexión
+        cursor = conn.cursor()
+        cursor.execute("SHOW TABLES")
+        rows = cursor.fetchall()
+        for row in rows:
+            table_names.append(row[0])
+    except Error as e:
+        print("Error en la consulta:", e)
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+    return table_names
+
+@app.route('/tables')
+def mostrar_nombres_de_tablas():
+    nombres_de_tablas = get_table_names()
+    return render_template('tables.html', nombres_de_tablas=nombres_de_tablas)
 
 @app.route('/check_connection', methods=['POST'])
 def check_connection():
@@ -198,16 +239,6 @@ def compare_with_database():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/mostrar_personas')
-def mostrar_personas():
-    # Obtén los datos de la base de datos
-    personas = get_personas()
-    
-    # Renderiza la plantilla HTML y pasa los datos a la plantilla
-
-
-
-    return render_template('personas.html', personas=personas)
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.21', port=8000)
+    app.run(host='192.168.1.13', port=8000)
