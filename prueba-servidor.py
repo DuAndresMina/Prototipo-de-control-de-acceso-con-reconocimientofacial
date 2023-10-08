@@ -7,9 +7,10 @@ import base64
 from datetime import datetime  # Importa la clase datetime
 import pytz
 from mysql.connector import Error
+from flask_cors import CORS  # Importa CORS
 
 app = Flask(__name__)
-
+CORS(app)
 # Configuración de la base de datos MySQL
 db_config = {
     'host': 'localhost',
@@ -43,75 +44,63 @@ def is_person_in_database(new_face_encoding, connection):
 
     return False
 
+@app.route('/api/get_person_data', methods=['GET', 'PUT', 'DELETE'])
+def get_or_update_or_delete_person_data():
+    if request.method == 'GET':
+        try:
+            conn = connect_to_database()
+            if conn is None:
+                return jsonify({"error": "Error de conexión a la base de datos"}), 500
 
-# Función para obtener la información de las personas desde la base de datos
-def get_personas_info():
-    personas_info = []
-    try:
-        conn = connect_to_database()  # Usa tu función existente para la conexión
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT id, nombre, image FROM personas")
-        resultados = cursor.fetchall()
-        for resultado in resultados:
-            persona = {
-                "id": resultado["id"],
-                "nombre": resultado["nombre"],
-                "imagen": (resultado["image"]).decode('utf-8')
-            }
-            personas_info.append(persona)
-    except Error as e:
-        print("Error en la consulta:", e)
-    finally:
-        if conn.is_connected():
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("SELECT id, nombre, image FROM personas")
+            personas_data = cursor.fetchall()
             cursor.close()
             conn.close()
-    return personas_info
 
+            # Codifica las imágenes en Base64 antes de enviarlas en la respuesta JSON
+            for persona in personas_data:
+                if 'image' in persona:
+                    imagen_bytes = persona['image']  # Obtiene los bytes de la imagen
+                    imagen_base64 = (imagen_bytes).decode('utf-8')  # Codifica en Base64
+                    persona['image'] = imagen_base64  # Actualiza la imagen en la respuesta JSON
 
+            return jsonify(personas_data)
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
-@app.route('/personas')
-def mostrar_personas():
-    personas_info = get_personas_info()
-    return render_template('personas.html', personas_info=personas_info)
+    elif request.method == 'PUT':
+        try:
+            data = request.get_json()
+            id_persona = data['id']
+            nuevo_nombre = data['nombre']
 
-
-def get_table_names():
-    table_names = []
-    try:
-        conn = connect_to_database()  # Usa tu función existente para la conexión
-        cursor = conn.cursor()
-        cursor.execute("SHOW TABLES")
-        rows = cursor.fetchall()
-        for row in rows:
-            table_names.append(row[0])
-    except Error as e:
-        print("Error en la consulta:", e)
-    finally:
-        if conn.is_connected():
+            conn = connect_to_database()
+            cursor = conn.cursor()
+            cursor.execute("UPDATE personas SET nombre = %s WHERE id = %s", (nuevo_nombre, id_persona))
+            conn.commit()
             cursor.close()
             conn.close()
-    return table_names
 
-@app.route('/tables')
-def mostrar_nombres_de_tablas():
-    nombres_de_tablas = get_table_names()
-    return render_template('tables.html', nombres_de_tablas=nombres_de_tablas)
+            return jsonify({"message": "Persona modificada exitosamente"}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
-@app.route('/check_connection', methods=['POST'])
-def check_connection():
-    data = request.json
-    if 'esp32_id' in data:
-        esp32_id = data['esp32_id']
-        # Realiza aquí cualquier lógica de verificación que desees
-        # Puedes verificar si el esp32_id es válido y si se conectó correctamente
-        # Devuelve una respuesta apropiada según la verificación
-        if esp32_id == 'esp32cam123':
-            response = {'status': 'Conexión exitosa'}
-        else:
-            response = {'status': 'Error de conexión'}
-    else:
-        response = {'error': 'Se requiere un esp32_id en la solicitud'}
-    return jsonify(response)
+    elif request.method == 'DELETE':
+        try:
+            data = request.get_json()
+            id_persona = data['id']
+
+            conn = connect_to_database()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM personas WHERE id = %s", (id_persona,))
+            conn.commit()
+            cursor.close()
+            conn.close()
+
+            return jsonify({"message": "Persona eliminada exitosamente"}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
 # Ruta para cargar una imagen de una persona y guardar sus características faciales en la base de datos
 @app.route('/add_person', methods=['POST'])
