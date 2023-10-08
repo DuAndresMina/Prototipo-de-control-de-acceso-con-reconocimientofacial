@@ -102,6 +102,51 @@ def get_or_update_or_delete_person_data():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
+@app.route('/api/get_auth_records', methods=['GET'])
+def get_auth_records():
+    try:
+        # Obtén el ID o nombre de la persona desde la solicitud
+        persona_id = request.args.get('persona_id', type=int)
+        persona_nombre = request.args.get('nombre', type=str)
+
+        conn = connect_to_database()
+        if conn is None:
+            return jsonify({"error": "Error de conexión a la base de datos"}), 500
+
+        cursor = conn.cursor(dictionary=True)
+
+        if persona_id:
+            # Si se proporciona un ID, busca registros de autenticaciones por ID de persona
+            cursor.execute("SELECT registro_autenticaciones.fecha_hora, personas.nombre, personas.image "
+                           "FROM registro_autenticaciones "
+                           "INNER JOIN personas ON registro_autenticaciones.person_id = personas.id "
+                           "WHERE registro_autenticaciones.person_id = %s", (persona_id,))
+        elif persona_nombre:
+            # Si se proporciona un nombre, busca registros de autenticaciones por nombre de persona
+            cursor.execute("SELECT registro_autenticaciones.fecha_hora, personas.nombre, personas.image "
+                           "FROM registro_autenticaciones "
+                           "INNER JOIN personas ON registro_autenticaciones.person_id = personas.id "
+                           "WHERE personas.nombre = %s", (persona_nombre,))
+        else:
+            # Si no se proporciona ni ID ni nombre, devuelve un error
+            return jsonify({"error": "Se requiere el ID o el nombre de la persona"}), 400
+
+        auth_records = cursor.fetchall()
+        cursor.close()
+        conn.close()
+
+        # Codifica las imágenes en Base64 antes de enviarlas en la respuesta JSON
+        for record in auth_records:
+            if 'image' in record:
+                imagen_bytes = record['image']  # Obtiene los bytes de la imagen
+                imagen_base64 = (imagen_bytes).decode('utf-8')  # Codifica en Base64
+                record['image'] = imagen_base64  # Actualiza la imagen en la respuesta JSON
+
+        return jsonify(auth_records)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 # Ruta para cargar una imagen de una persona y guardar sus características faciales en la base de datos
 @app.route('/add_person', methods=['POST'])
 def add_person_to_database():
