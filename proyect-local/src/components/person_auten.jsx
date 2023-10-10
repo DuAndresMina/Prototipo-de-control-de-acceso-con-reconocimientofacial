@@ -1,23 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './person_auten.css';
 
 function Contact() {
   const [searchTerm, setSearchTerm] = useState('');
   const [authRecords, setAuthRecords] = useState([]);
+  const [authRecordIdToDelete, setAuthRecordIdToDelete] = useState('');
 
-  const handleSearch = () => {
+  useEffect(() => {
     // Reemplaza 'localhost' con la dirección IP de tu servidor Flask
     const serverIp = '192.168.1.13'; // Ejemplo: '192.168.1.100'
 
     // Realiza una solicitud GET al servidor Flask para buscar registros por person_id o nombre
-    axios.get(`http://${serverIp}:8000/api/get_auth_records_by_id`, {
+    axios.get(`http://${serverIp}:8000/api/auth_records`, {
       params: {
         query: searchTerm,
       },
     })
       .then(response => {
         setAuthRecords(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, [searchTerm]);
+
+  const handleSearch = () => {
+    setSearchTerm(searchTerm);
+  };
+
+  const handleDeleteAuthRecord = () => {
+    // Reemplaza 'localhost' con la dirección IP de tu servidor Flask
+    const serverIp = '192.168.1.13'; // Ejemplo: '192.168.1.100'
+
+    // Realiza una solicitud DELETE al servidor Flask para eliminar un registro de autenticación por su ID
+    axios.delete(`http://${serverIp}:8000/api/delete_auth_record`, {
+      data: { id: authRecordIdToDelete },
+    })
+      .then(response => {
+        // Actualiza la lista de registros después de la eliminación
+        setAuthRecords(authRecords.filter(record => record.id !== authRecordIdToDelete));
+        setAuthRecordIdToDelete('');
       })
       .catch(error => {
         console.error(error);
@@ -35,36 +58,32 @@ function Contact() {
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
         />
+        <button onClick={handleSearch}>Buscar</button>
       </div>
-      <button onClick={handleSearch}>Buscar</button>
-      {authRecords.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Fecha y Hora</th>
-              <th>Foto de la Persona</th>
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha y Hora</th>
+            <th>Foto de la Persona</th>
+          </tr>
+        </thead>
+        <tbody>
+          {authRecords.map((record, index) => (
+            <tr key={index}>
+              <td>{record.fecha_hora}</td>
+              <td>
+                {record.image && (
+                  <img
+                    src={`data:image/jpeg;base64,${record.image}`}
+                    alt="Foto de la persona"
+                    style={{ width: '100px', height: 'auto' }}
+                  />
+                )}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {authRecords.map((record, index) => (
-              <tr key={index}>
-                <td>{record.fecha_hora}</td>
-                <td>
-                  {record.image && (
-                    <img
-                      src={`data:image/jpeg;base64,${record.image}`}
-                      alt="Foto de la persona"
-                      style={{ width: '100px', height: 'auto' }}
-                    />
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No se encontraron registros.</p>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
