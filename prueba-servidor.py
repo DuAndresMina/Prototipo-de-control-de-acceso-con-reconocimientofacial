@@ -102,35 +102,25 @@ def get_or_update_or_delete_person_data():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-@app.route('/api/get_auth_records', methods=['GET'])
-def get_auth_records():
+@app.route('/api/get_auth_records_by_id', methods=['GET'])
+def get_auth_records_by_id():
     try:
-        # Obtén el ID o nombre de la persona desde la solicitud
-        persona_id = request.args.get('persona_id', type=int)
-        persona_nombre = request.args.get('nombre', type=str)
-
         conn = connect_to_database()
         if conn is None:
             return jsonify({"error": "Error de conexión a la base de datos"}), 500
 
         cursor = conn.cursor(dictionary=True)
 
-        if persona_id:
-            # Si se proporciona un ID, busca registros de autenticaciones por ID de persona
-            cursor.execute("SELECT registro_autenticaciones.fecha_hora, personas.nombre, personas.image "
-                           "FROM registro_autenticaciones "
-                           "INNER JOIN personas ON registro_autenticaciones.person_id = personas.id "
-                           "WHERE registro_autenticaciones.person_id = %s", (persona_id,))
-        elif persona_nombre:
-            # Si se proporciona un nombre, busca registros de autenticaciones por nombre de persona
-            cursor.execute("SELECT registro_autenticaciones.fecha_hora, personas.nombre, personas.image "
-                           "FROM registro_autenticaciones "
-                           "INNER JOIN personas ON registro_autenticaciones.person_id = personas.id "
-                           "WHERE personas.nombre = %s", (persona_nombre,))
-        else:
-            # Si no se proporciona ni ID ni nombre, devuelve un error
-            return jsonify({"error": "Se requiere el ID o el nombre de la persona"}), 400
+        query = request.args.get('query', type=str)
 
+        # Modifica la consulta SQL para seleccionar la fecha_hora de los registros de autenticación
+        # y la imagen de la persona
+        cursor.execute("SELECT registro_autenticaciones.fecha_hora, personas.image "
+                       "FROM registro_autenticaciones "
+                       "INNER JOIN personas ON registro_autenticaciones.persona_id = personas.id "
+                       "WHERE registro_autenticaciones.persona_id = %s OR personas.nombre = %s",
+                       (query, query))
+        
         auth_records = cursor.fetchall()
         cursor.close()
         conn.close()
@@ -145,6 +135,11 @@ def get_auth_records():
         return jsonify(auth_records)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+
+
+
 
 
 # Ruta para cargar una imagen de una persona y guardar sus características faciales en la base de datos
@@ -197,7 +192,7 @@ def add_person_to_database():
 @app.route('/compare', methods=['POST'])
 def compare_with_database():
     try:
-        file = request.files['image']
+        file = request.files['imageFile']
 
         # Leer los datos binarios de la imagen directamente desde la solicitud
         image_data = file.read()
