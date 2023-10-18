@@ -137,10 +137,32 @@ def get_auth_records_by_id():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/api/failed_auth_attempts', methods=['GET'])
+def get_failed_auth_attempts():
+    try:
+        conn = connect_to_database()
+        if conn is None:
+            return jsonify({"error": "Error de conexión a la base de datos"}), 500
 
+        cursor = conn.cursor(dictionary=True)
 
+        # Realiza una consulta SQL para seleccionar todos los registros de intentos fallidos de autenticación
+        cursor.execute("SELECT fecha_hora, imagen FROM intentos_autenticacion")
 
+        auth_attempts = cursor.fetchall()
+        cursor.close()
+        conn.close()
 
+        # Codifica las imágenes en Base64 antes de enviarlas en la respuesta JSON
+        for attempt in auth_attempts:
+            if 'imagen' in attempt:
+                imagen_bytes = attempt['imagen']  # Obtiene los bytes de la imagen
+                imagen_base64 = (imagen_bytes).decode('utf-8')  # Codifica en Base64
+                attempt['imagen'] = imagen_base64  # Actualiza la imagen en la respuesta JSON
+
+        return jsonify(auth_attempts)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Ruta para cargar una imagen de una persona y guardar sus características faciales en la base de datos
 @app.route('/add_person', methods=['POST'])
