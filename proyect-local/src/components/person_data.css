@@ -1,80 +1,66 @@
-/* Estilos generales para el body de la página */
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
+/* Estilo general del componente */
 
-/* Estilos para el contenedor principal */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+.App {
+  font-family: Arial, sans-serif;
   text-align: center;
+  background-color: #87CEEB; /* Azul cielo de fondo */
+  padding: 20px;
 }
 
-/* Estilos para el encabezado h1 */
-h1 {
-  font-size: 28px;
-  color: #333;
-  margin: 20px 0;
-}
-
-/* Estilos para la tabla de resultados */
+/* Estilo de la tabla */
 table {
   width: 100%;
-  border-collapse: collapse;
   margin-top: 20px;
+  border-collapse: collapse;
+  background-color: #FFFFFF; /* Fondo blanco */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
-table, th, td {
-  border: 1px solid #ddd;
+/* Estilo de las filas de la tabla */
+tr {
+  border-bottom: 1px solid #dddddd;
 }
 
-th, td {
-  padding: 12px;
+/* Estilo de las celdas de la tabla */
+td {
+  padding: 15px;
+}
+
+/* Estilo de los encabezados de la tabla */
+th {
+  background-color: #87CEEB; /* Azul cielo */
+  color: #FFFFFF; /* Texto blanco */
+  font-weight: bold;
+  padding: 15px;
   text-align: left;
 }
 
-/* Estilos para los encabezados de la tabla */
-th {
-  background-color: #f2f2f2;
+/* Estilo de los botones */
+button {
+  background-color: #0074CC; /* Azul más oscuro para botones */
+  color: #FFFFFF; /* Texto blanco */
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-/* Estilos para la imagen de la persona */
-.person-image {
-  max-width: 100px;
-  height: auto;
-  border-radius: 50%;
+button:hover {
+  background-color: #005192; /* Cambio de color al pasar el ratón */
 }
 
-/* Estilos para la barra de búsqueda */
-.search-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
+/* Estilo de las entradas de texto */
+input {
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
 }
 
-/* Estilos para los enlaces de navegación */
-.nav-link {
-  color: #007bff;
-  text-decoration: none;
+/* Estilo para las imágenes */
+img {
+  max-width: 100px;
+  height: auto;
 }
 
-/* Estilos para los enlaces de navegación al pasar el cursor */
-.nav-link:hover {
-  text-decoration: underline;
-  color: #0056b3;
-}
