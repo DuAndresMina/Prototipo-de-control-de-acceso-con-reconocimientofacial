@@ -1,7 +1,8 @@
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Home from './components/person_data';
 import About from './components/person_auten';
-import Contact from './components/Contact';
+import Contact from './components/failed_auten';
+import './App.css'; 
 
 function App() {
   return (
