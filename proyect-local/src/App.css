@@ -1,80 +1,33 @@
-/* Estilos generales para el body de la página */
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-/* Estilos para el contenedor principal */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* Estilo general de la barra de navegación */
+nav {
+  background-color: #87CEEB; /* Azul cielo */
+  padding: 10px;
   text-align: center;
 }
 
-/* Estilos para el encabezado h1 */
-h1 {
-  font-size: 28px;
-  color: #333;
-  margin: 20px 0;
+/* Estilo de los elementos de la barra de navegación */
+nav ul {
+  list-style: none;
+  padding: 0;
 }
 
-/* Estilos para la tabla de resultados */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+nav ul li {
+  display: inline;
+  margin-right: 20px;
 }
 
-table, th, td {
-  border: 1px solid #ddd;
+nav ul li:last-child {
+  margin-right: 0;
 }
 
-th, td {
-  padding: 12px;
-  text-align: left;
-}
-
-/* Estilos para los encabezados de la tabla */
-th {
-  background-color: #f2f2f2;
-}
-
-/* Estilos para la imagen de la persona */
-.person-image {
-  max-width: 100px;
-  height: auto;
-  border-radius: 50%;
-}
-
-/* Estilos para la barra de búsqueda */
-.search-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-/* Estilos para los enlaces de navegación */
-.nav-link {
-  color: #007bff;
+/* Estilo de los enlaces de navegación */
+nav a {
   text-decoration: none;
+  color: #FFFFFF; /* Blanco */
+  font-size: 18px;
 }
 
-/* Estilos para los enlaces de navegación al pasar el cursor */
-.nav-link:hover {
-  text-decoration: underline;
-  color: #0056b3;
+/* Cambio de estilo al pasar el ratón sobre los enlaces */
+nav a:hover {
+  text-decoration: underline; /* Subrayado al pasar el ratón */
 }
