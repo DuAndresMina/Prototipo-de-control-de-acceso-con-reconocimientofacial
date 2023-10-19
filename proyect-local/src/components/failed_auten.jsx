@@ -6,7 +6,7 @@ function About() {
 
   useEffect(() => {
     // Reemplaza 'localhost' con la dirección IP de tu servidor Flask
-    const serverIp = '192.168.1.13'; // Ejemplo: '192.168.1.100'
+    const serverIp = '192.168.1.16'; // Ejemplo: '192.168.1.100'
 
     // Realiza una solicitud GET al servidor Flask para obtener los intentos fallidos de autenticación
     axios.get(`http://${serverIp}:8000/api/failed_auth_attempts`)
