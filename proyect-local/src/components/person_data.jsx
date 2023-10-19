@@ -9,7 +9,7 @@ function Home() {
 
   useEffect(() => {
     // Reemplaza 'localhost' con la dirección IP de tu servidor Flask
-    const serverIp = '192.168.1.13'; // Ejemplo: '192.168.1.100'
+    const serverIp = '192.168.1.16'; // Ejemplo: '192.168.1.100'
 
     // Realiza una solicitud GET al servidor Flask para obtener los datos de las personas
     axios.get(`http://${serverIp}:8000/api/get_person_data`)
