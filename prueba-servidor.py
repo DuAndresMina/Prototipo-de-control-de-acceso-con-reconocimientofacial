@@ -8,9 +8,12 @@ from datetime import datetime  # Importa la clase datetime
 import pytz
 from mysql.connector import Error
 from flask_cors import CORS  # Importa CORS
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app)
+
 # Configuración de la base de datos MySQL
 db_config = {
     'host': 'localhost',
@@ -163,11 +166,19 @@ def get_failed_auth_attempts():
         return jsonify(auth_attempts)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/mensaje', methods=['GET'])
+def enviar_mensaje():
+    mensaje = "¡Hola, Arduino! Esta es una respuesta del servidor."
+    return jsonify({"mensaje": mensaje})
+
 
 # Ruta para cargar una imagen de una persona y guardar sus características faciales en la base de datos
 @app.route('/add_person', methods=['POST'])
 def add_person_to_database():
     try:
+
         file = request.files['imageFile']
 
         # Leer los datos binarios de la imagen directamente desde la solicitud
@@ -205,13 +216,14 @@ def add_person_to_database():
         connection.commit()
         cursor.close()
         connection.close()
+        emit('response', '5')
 
-        return jsonify({"message": "Características faciales y la imagen han sido almacenadas en la base de datos en formato base64."}), 200
+        return jsonify({"code": 5, "message": "Características faciales y la imagen han sido almacenadas en la base de datos en formato base64."}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
 # Ruta para comparar una imagen con las características faciales de la base de datos
-@app.route('/compare', methods=['POST'])
+@app.route('/compare', methods=['POST', 'GET'])
 def compare_with_database():
     try:
         file = request.files['imageFile']
@@ -292,4 +304,4 @@ def compare_with_database():
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.16', port=8000)
+    app.run(host='192.168.20.2', port=8000)
