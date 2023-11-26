@@ -3,9 +3,9 @@ import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import './App.css'; // Importa tu archivo de estilos principal
 import Login from './Login';
-import Person_data from './person_data';
-import Dashboard2 from './Second'
-import Dash from './Dash';
+import Personas from './Personas_data';
+import Autenticaciones from './Personas_auten'
+import Personas_fallos from './Personas_fallos';
 import Home from './Home';
 import Navbar from './Utils/Navbar'; // Asegúrate de importar el componente Navbar
 import Home2 from './Home2'
@@ -45,9 +45,9 @@ function App() {
               <Route exact path="/" component={Home} />
               <PrivateRoute exact path="/home-2" component={Home2} />
               <PublicRoute path="/login" component={Login} />
-              <PrivateRoute path="/person_data" component={Person_data} />
-              <PrivateRoute path="/dashboard2" component={Dashboard2} />
-              <PrivateRoute path="/dash" component={Dash} />
+              <PrivateRoute path="/Usuarios" component={Personas} />
+              <PrivateRoute path="/Registros" component={Autenticaciones} />
+              <PrivateRoute path="/Invalidos" component={Personas_fallos} />
             </Switch>
           </div>
         </div>
