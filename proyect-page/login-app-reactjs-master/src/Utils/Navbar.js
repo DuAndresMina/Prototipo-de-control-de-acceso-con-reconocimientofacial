@@ -26,7 +26,7 @@ const handleLogout = () => {
     <nav className="navbar">
       <div className="nav-container">
         <NavLink to="/" exact className="nav-logo">
-          AkemCodes
+          Facetag
           <i className="fas fa-code"></i>
         </NavLink>
 
@@ -37,23 +37,24 @@ const handleLogout = () => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/dashboard" exact className="nav-links" onClick={handleClick}>
-              Dashboard
+            <NavLink to="/Usuarios" exact className="nav-links" onClick={handleClick}>
+              Usuarios
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/dashboard2" exact className="nav-links" onClick={handleClick}>
-              Dashboard2
+            <NavLink to="/Registros" exact className="nav-links" onClick={handleClick}>
+              Registros de Autenticación
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/dash" exact className="nav-links" onClick={handleClick}>
-              Dash
+            <NavLink to="/Invalidos" exact className="nav-links" onClick={handleClick}>
+              Registros Inválidos
             </NavLink>
           </li>
           {user ? (
             <li className="nav-item">
-              <input type="button" onClick={handleLogout} value="Logout" />
+              <input 
+              type="button" onClick={handleLogout} value="Logout" className="logout-button"/>
             </li>
           ) : null}
         </ul>
