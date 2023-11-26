@@ -1,8 +1,54 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import { setUserSession } from './Utils/Common';
 import { getUser, removeUserSession } from './Utils/Common';
-import Home2 from './Home2'
+import Home2 from './Home2';
+
+// Crear un componente Styled para el contenedor principal
+const Container = styled.div`
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+`;
+
+// Crear un componente Styled para el título
+const Title = styled.h1`
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+`;
+
+// Crear un componente Styled para el formulario
+const Form = styled.div`
+  margin-top: 20px;
+`;
+
+// Crear un componente Styled para los campos de entrada
+const InputField = styled.div`
+  margin-bottom: 10px;
+`;
+
+// Crear un componente Styled para el botón de inicio de sesión
+const LoginButton = styled.input`
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+// Crear un componente Styled para el mensaje de error
+const ErrorMessage = styled.small`
+  color: red;
+`;
+
 function Home(props) {
   // Estados del componente
   const [loading, setLoading] = useState(false);
@@ -14,7 +60,7 @@ function Home(props) {
   // Redirigir si el usuario ya está autenticado
   useEffect(() => {
     if (user) {
-      props.history.push('/home-2'); // Cambié la redirección a '/dash' en lugar de '/'
+      props.history.push('/home-2');
     }
   }, [props.history, user]);
 
@@ -22,6 +68,7 @@ function Home(props) {
   const handleLogin = () => {
     setError(null);
     setLoading(true);
+
 
     // Hacer la llamada a la API para iniciar sesión
     axios
@@ -32,7 +79,7 @@ function Home(props) {
       .then((response) => {
         setLoading(false);
         setUserSession(response.data.token, response.data.user);
-        props.history.push('/'); // Redirigir al inicio de sesión exitoso
+        props.history.push('/');
       })
       .catch((error) => {
         setLoading(false);
@@ -44,40 +91,43 @@ function Home(props) {
       });
   }
 
-  // Manejar el cierre de sesión
-  const handleLogout = () => {
-    removeUserSession();
-    props.history.push('/');
-  }
+    // Manejar el cierre de sesión
+    const handleLogout = () => {
+      removeUserSession();
+      props.history.push('/');
+    }
 
   return (
-    <div>
+    <Container>
       {user ? (
-        // Si el usuario ya ha iniciado sesión, muestra el botón de cierre de sesión
+        // Si el usuario ya ha iniciado sesión, muestra el mensaje de bienvenida y el botón de cierre de sesión
         <div>
-          <p>Welcome, {user.name}!</p>
+          <Title>Welcome, {user.name}!</Title>
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
         // Si no ha iniciado sesión, muestra el formulario de inicio de sesión
         <div>
-          Welcome to the Home Page!
-          <div>
-            Login<br /><br />
-            <div>
-              Username<br />
-              <input type="text" {...username} autoComplete="new-password" />
-            </div>
-            <div style={{ marginTop: 10 }}>
-              Password<br />
-              <input type="password" {...password} autoComplete="new-password" />
-            </div>
-            {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
-            <input type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} disabled={loading} /><br />
-          </div>
+          <Title>Welcome to the Home Page!</Title>
+          <Form>
+            <InputField>
+              <div>
+                Username<br />
+                <input type="text" {...username} autoComplete="new-password" />
+              </div>
+            </InputField>
+            <InputField>
+              <div>
+                Password<br />
+                <input type="password" {...password} autoComplete="new-password" />
+              </div>
+            </InputField>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            <LoginButton type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} disabled={loading} />
+          </Form>
         </div>
       )}
-    </div>
+    </Container>
   );
 }
 
