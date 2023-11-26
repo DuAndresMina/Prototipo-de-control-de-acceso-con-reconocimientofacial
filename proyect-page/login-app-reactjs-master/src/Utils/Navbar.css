@@ -15,6 +15,23 @@
   /* Resto de los estilos de la barra de navegación... */
 }
 
+/* Estilos adicionales para el botón de logout */
+.logout-button {
+  background-color: #ffdd40; /* Color de fondo */
+  color: #1f5156; /* Color del texto */
+  padding: 8px 16px; /* Espaciado interno del botón */
+  border: none; /* Elimina el borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón */
+  font-size: 14px; /* Tamaño del texto */
+  transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+}
+
+/* Cambia el color de fondo al pasar el ratón */
+.logout-button:hover {
+  background-color: #e0c72f;
+}
+
 .nav-container {
   display: flex;
   justify-content: center;
