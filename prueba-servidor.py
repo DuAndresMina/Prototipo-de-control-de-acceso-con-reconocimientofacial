@@ -89,21 +89,6 @@ def get_or_update_or_delete_person_data():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-    elif request.method == 'DELETE':
-        try:
-            data = request.get_json()
-            id_persona = data['id']
-
-            conn = connect_to_database()
-            cursor = conn.cursor()
-            cursor.execute("DELETE FROM personas WHERE id = %s", (id_persona,))
-            conn.commit()
-            cursor.close()
-            conn.close()
-
-            return jsonify({"message": "Persona eliminada exitosamente"}), 200
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
 
 @app.route('/api/get_auth_records_by_id', methods=['GET'])
 def get_auth_records_by_id():
@@ -168,11 +153,6 @@ def get_failed_auth_attempts():
         return jsonify({"error": str(e)}), 500
     
 
-@app.route('/mensaje', methods=['GET'])
-def enviar_mensaje():
-    mensaje = "¡Hola, Arduino! Esta es una respuesta del servidor."
-    return jsonify({"mensaje": mensaje})
-
 
 # Ruta para cargar una imagen de una persona y guardar sus características faciales en la base de datos
 @app.route('/add_person', methods=['POST'])
@@ -189,7 +169,7 @@ def add_person_to_database():
         face_encoding = face_recognition.face_encodings(image)
 
         if not face_encoding:
-            return jsonify({"message": "No se encontraron rostros en la imagen."}), 400
+            return jsonify({"message": "No se encontraron rostros en la imagen. ADD_PERSON"}), 400
 
         # Conectar a la base de datos
         connection = connect_to_database()
