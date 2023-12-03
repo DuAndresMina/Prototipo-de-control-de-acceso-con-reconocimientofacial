@@ -47,7 +47,7 @@ def is_person_in_database(new_face_encoding, connection):
 
     return False
 
-@app.route('/api/get_person_data', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/api/get_person_data', methods=['GET', 'PUT'])
 def get_or_update_or_delete_person_data():
     if request.method == 'GET':
         try:
@@ -179,7 +179,7 @@ def add_person_to_database():
         if is_person_in_database(face_encoding[0], connection):
             cursor.close()
             connection.close()
-            return jsonify({"message": "La persona ya está en la base de datos."}), 200
+            return jsonify({"message": "La persona ya está en la base de datos. ADD_PERSON"}), 200
 
         # Convertir la matriz NumPy a una lista de Python
         face_encoding_list = face_encoding[0].tolist()
@@ -196,9 +196,8 @@ def add_person_to_database():
         connection.commit()
         cursor.close()
         connection.close()
-        emit('response', '5')
 
-        return jsonify({"code": 5, "message": "Características faciales y la imagen han sido almacenadas en la base de datos en formato base64."}), 200
+        return jsonify({"message": "Características faciales y la imagen han sido almacenadas en la base de datos en formato base64. ADD_PERSON"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
