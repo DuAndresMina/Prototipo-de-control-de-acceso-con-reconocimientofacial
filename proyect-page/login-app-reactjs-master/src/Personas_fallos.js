@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Typography, Container, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 import './failed_auten.css';
 
 function Personas_fallos(props) {
   const [failedAttempts, setFailedAttempts] = useState([]);
 
-
   useEffect(() => {
-    // Reemplaza 'localhost' con la dirección IP de tu servidor Flask
-    const serverIp = '192.168.20.2'; // Ejemplo: '192.168.1.100'
+    fetchData();
+  }, []);
 
-    // Realiza una solicitud GET al servidor Flask para obtener los intentos fallidos de autenticación
+  const fetchData = () => {
+    const serverIp = '192.168.20.2';
     axios.get(`http://${serverIp}:8000/api/failed_auth_attempts`)
       .then(response => {
         setFailedAttempts(response.data);
@@ -18,23 +19,25 @@ function Personas_fallos(props) {
       .catch(error => {
         console.error(error);
       });
-  }, []);
+  };
 
   return (
-    <div className="App" style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ textAlign: 'center' }}>Intentos Fallidos de Autenticación</h1>
-      <table>
-        <thead>
-          <tr>
-            <th style={{ textAlign: 'center' }}>Fecha y Hora</th>
-            <th style={{ textAlign: 'center' }}>Imagen</th>
-          </tr>
-        </thead>
-        <tbody>
+    <Container maxWidth="md">
+      <Typography variant="h4" align="center" gutterBottom>
+        Intentos Fallidos de Autenticación
+      </Typography>
+      <Table component={Paper} sx={{ marginTop: '20px' }}>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">Fecha y Hora</TableCell>
+            <TableCell align="center">Imagen</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {failedAttempts.map((attempt, index) => (
-            <tr key={index}>
-              <td style={{ textAlign: 'center' }}>{attempt.fecha_hora}</td>
-              <td style={{ textAlign: 'center' }}>
+            <TableRow key={index}>
+              <TableCell align="center">{attempt.fecha_hora}</TableCell>
+              <TableCell align="center">
                 {attempt.imagen && (
                   <img
                     src={`data:image/jpeg;base64,${attempt.imagen}`}
@@ -42,12 +45,12 @@ function Personas_fallos(props) {
                     style={{ width: '100px', height: 'auto' }}
                   />
                 )}
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </Container>
   );
 }
 
