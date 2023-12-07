@@ -179,7 +179,7 @@ def add_person_to_database():
         if is_person_in_database(face_encoding[0], connection):
             cursor.close()
             connection.close()
-            return jsonify({"message": "La persona ya está en la base de datos. ADD_PERSON"}), 200
+            return jsonify({"message": "La persona ya está en la base de datos. ADD_PERSON"}), 300
 
         # Convertir la matriz NumPy a una lista de Python
         face_encoding_list = face_encoding[0].tolist()
