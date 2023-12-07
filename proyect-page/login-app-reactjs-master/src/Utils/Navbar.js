@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { getUser, removeUserSession } from './Common';
 
 function Navbar(props) {
@@ -9,15 +9,11 @@ function Navbar(props) {
   const handleClick = () => setClick(!click);
 
 // handle click event of logout button
+const history = useHistory();
 const handleLogout = () => {
   removeUserSession();
-  if (props.history) {
-    props.history.push('/');
-  } else {
-    // Handle the case when props.history is undefined
-    // You can choose to navigate to another page or handle it accordingly
-  }
-}
+  history.push('/');
+};
 
 
   const user = getUser();
@@ -44,6 +40,11 @@ const handleLogout = () => {
           <li className="nav-item">
             <NavLink to="/Registros" exact className="nav-links" onClick={handleClick}>
               Registros de Autenticación
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/Agregar_personas" exact className="nav-links" onClick={handleClick}>
+              Agregar Persona
             </NavLink>
           </li>
           <li className="nav-item">
