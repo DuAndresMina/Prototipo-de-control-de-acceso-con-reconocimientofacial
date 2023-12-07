@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './person_data.css'; // Importa el archivo CSS
+import { Typography, Container, Table, TableHead, TableBody, TableRow, TableCell, TextField, Button, Avatar, Paper } from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RefreshIcon from '@mui/icons-material/Refresh';
+
+
+import './person_data.css'; // Import the CSS file
 
 function Personas(props) {
   const [personData, setPersonData] = useState([]);
-  const [newNames, setNewNames] = useState({}); // Objeto para almacenar los nuevos nombres por ID
-
+  const [newNames, setNewNames] = useState({});
 
   useEffect(() => {
-    // Reemplaza 'localhost' con la dirección IP de tu servidor Flask
-    const serverIp = '192.168.20.2'; // Ejemplo: '192.168.1.100'
+    fetchData();
+  }, []);
 
-    // Realiza una solicitud GET al servidor Flask para obtener los datos de las personas
+  const fetchData = () => {
+    const serverIp = '192.168.20.2';
     axios.get(`http://${serverIp}:8000/api/get_person_data`)
       .then(response => {
         setPersonData(response.data);
@@ -19,37 +24,25 @@ function Personas(props) {
       .catch(error => {
         console.error(error);
       });
-  }, []);
+  };
 
   const handleUpdatePerson = (id) => {
-    const serverIp = '192.168.20.2'; // Ejemplo: '192.168.1.100'
-    
-    // Obtén el nuevo nombre de la persona según su ID desde el estado newNames
+    const serverIp = '192.168.20.2';
     const newName = newNames[id];
 
-    // Realiza una solicitud PUT para actualizar el nombre de la persona con el ID proporcionado
     axios.put(`http://${serverIp}:8000/api/get_person_data`, {
       id: id,
       nombre: newName,
     })
       .then(response => {
-        // Actualiza la lista de personas después de la modificación
-        axios.get(`http://${serverIp}:8000/api/get_person_data`)
-          .then(response => {
-            setPersonData(response.data);
-          })
-          .catch(error => {
-            console.error(error);
-          });
+        fetchData();
       })
       .catch(error => {
         console.error(error);
       });
   };
 
-
   const handleNewNameChange = (id, value) => {
-    // Actualiza el estado newNames con el nuevo nombre para la persona correspondiente
     setNewNames(prevState => ({
       ...prevState,
       [id]: value,
@@ -57,45 +50,64 @@ function Personas(props) {
   };
 
   return (
-    <div className="App Personas" style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ textAlign: 'center' }}>Personas en la Base de Datos</h1>
-      <table>
-        <thead>
-          <tr>
-            <th style={{ textAlign: 'center' }}>ID</th>
-            <th style={{ textAlign: 'center' }}>Nombre</th>
-            <th style={{ textAlign: 'center' }}>Foto</th>
-            <th style={{ textAlign: 'center' }}>Actualizar Nombre</th>
-          </tr>
-        </thead>
-        <tbody>
-          {personData.map((person, index) => (
-            <tr key={index}>
-              <td style={{ textAlign: 'center' }}>{person.id}</td>
-              <td style={{ textAlign: 'center' }}>{person.nombre}</td>
-              <td style={{ textAlign: 'center' }}>
+    <Container maxWidth="md">
+      <Typography variant="h4" align="center" gutterBottom>
+        Personas en la Base de Datos
+      </Typography>
+      <Table component={Paper}>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">ID</TableCell>
+            <TableCell align="center">Nombre</TableCell>
+            <TableCell align="center">Foto</TableCell>
+            <TableCell align="center">Actualizar Nombre</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {personData.map((person) => (
+            <TableRow key={person.id}>
+              <TableCell align="center">{person.id}</TableCell>
+              <TableCell align="center">{person.nombre}</TableCell>
+              <TableCell align="center">
                 {person.image && (
-                  <img
+                  <Avatar
                     src={`data:image/jpeg;base64,${person.image}`}
                     alt={`Foto de ${person.nombre}`}
-                    style={{ width: '100px', height: 'auto' }}
+                    sx={{ width: '100px', height: '100px' }}
                   />
                 )}
-              </td>
-              <td style={{ textAlign: 'center' }}>
-                <input
-                  type="text"
+              </TableCell>
+              <TableCell align="center">
+                <TextField
                   placeholder="Nuevo Nombre"
                   value={newNames[person.id] || ''}
                   onChange={(e) => handleNewNameChange(person.id, e.target.value)}
                 />
-                <button onClick={() => handleUpdatePerson(person.id)}>Actualizar</button>
-              </td>
-            </tr>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleUpdatePerson(person.id)}
+                  startIcon={<RefreshIcon />}
+                  style={{ marginLeft: '8px' }}
+                >
+                  Actualizar
+                </Button>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={fetchData}
+          startIcon={<AddCircleIcon />}
+        >
+          Actualizar Datos
+        </Button>
+      </div>
+    </Container>
   );
 }
 
