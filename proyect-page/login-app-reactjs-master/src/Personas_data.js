@@ -47,25 +47,6 @@ function Personas(props) {
       });
   };
 
-  const handleDeletePerson = (id) => {
-    const serverIp = '192.168.20.2'; // Ejemplo: '192.168.1.100'
-    axios.delete(`http://${serverIp}:8000/api/get_person_data`, {
-      data: { id: id },
-    })
-      .then(response => {
-        // Actualiza la lista de personas después de la eliminación
-        axios.get(`http://${serverIp}:8000/api/get_person_data`)
-          .then(response => {
-            setPersonData(response.data);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
 
   const handleNewNameChange = (id, value) => {
     // Actualiza el estado newNames con el nuevo nombre para la persona correspondiente
@@ -76,24 +57,23 @@ function Personas(props) {
   };
 
   return (
-    <div className="App Personas">
-      <h1>Personas en la Base de Datos:</h1>
+    <div className="App Personas" style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <h1 style={{ textAlign: 'center' }}>Personas en la Base de Datos</h1>
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Foto</th>
-            <th>Actualizar Nombre</th>
-            <th>Eliminar</th>
+            <th style={{ textAlign: 'center' }}>ID</th>
+            <th style={{ textAlign: 'center' }}>Nombre</th>
+            <th style={{ textAlign: 'center' }}>Foto</th>
+            <th style={{ textAlign: 'center' }}>Actualizar Nombre</th>
           </tr>
         </thead>
         <tbody>
           {personData.map((person, index) => (
             <tr key={index}>
-              <td>{person.id}</td>
-              <td>{person.nombre}</td>
-              <td>
+              <td style={{ textAlign: 'center' }}>{person.id}</td>
+              <td style={{ textAlign: 'center' }}>{person.nombre}</td>
+              <td style={{ textAlign: 'center' }}>
                 {person.image && (
                   <img
                     src={`data:image/jpeg;base64,${person.image}`}
@@ -102,7 +82,7 @@ function Personas(props) {
                   />
                 )}
               </td>
-              <td>
+              <td style={{ textAlign: 'center' }}>
                 <input
                   type="text"
                   placeholder="Nuevo Nombre"
@@ -110,9 +90,6 @@ function Personas(props) {
                   onChange={(e) => handleNewNameChange(person.id, e.target.value)}
                 />
                 <button onClick={() => handleUpdatePerson(person.id)}>Actualizar</button>
-              </td>
-              <td>
-                <button onClick={() => handleDeletePerson(person.id)}>Eliminar</button>
               </td>
             </tr>
           ))}
