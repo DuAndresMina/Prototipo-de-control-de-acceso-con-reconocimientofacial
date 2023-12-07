@@ -9,7 +9,6 @@ import pytz
 from mysql.connector import Error
 from flask_cors import CORS  # Importa CORS
 from flask_socketio import SocketIO, emit
-
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app)
@@ -152,25 +151,32 @@ def get_failed_auth_attempts():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
+from io import BytesIO
+from PIL import Image
 
 
-# Ruta para cargar una imagen de una persona y guardar sus características faciales en la base de datos
-@app.route('/add_person', methods=['POST'])
-def add_person_to_database():
+@app.route('/api/add_person_react', methods=['POST'])
+def add_person_to_database_react():
     try:
-
         file = request.files['imageFile']
+        nombre = request.form.get('nombre')
 
         # Leer los datos binarios de la imagen directamente desde la solicitud
         image_data = file.read()
         
-        # Cargar la imagen de la persona
-        image = face_recognition.load_image_file(file)
-        face_encoding = face_recognition.face_encodings(image)
+        # Cargar la imagen de la persona desde datos binarios
+        image = face_recognition.api.load_image_file(BytesIO(image_data))
+        face_locations = face_recognition.face_locations(image)
 
-        if not face_encoding:
-            return jsonify({"message": "No se encontraron rostros en la imagen. ADD_PERSON"}), 400
+        if not face_locations:
+            return jsonify({"message": "No se encontraron rostros en la imagen."}), 400
 
+        # Obtener las coordenadas del primer rostro y recortar la imagen
+        top, right, bottom, left = face_locations[0]
+        cropped_face = image[top:bottom, left:right].copy()  # Utiliza copy() para crear una copia C-contigua
+
+        face_encoding = face_recognition.face_encodings(cropped_face)
+        
         # Conectar a la base de datos
         connection = connect_to_database()
         cursor = connection.cursor()
@@ -179,7 +185,13 @@ def add_person_to_database():
         if is_person_in_database(face_encoding[0], connection):
             cursor.close()
             connection.close()
-            return jsonify({"message": "La persona ya está en la base de datos. ADD_PERSON"}), 300
+            return jsonify({"message": "La persona ya está en la base de datos."}), 300
+        
+                # Convertir la matriz NumPy a una cadena base64
+        image_pil = Image.fromarray(cropped_face)
+        buffer = BytesIO()
+        image_pil.save(buffer, format="JPEG")
+        cropped_image_base64 = base64.b64encode(buffer.getvalue()).decode()        
 
         # Convertir la matriz NumPy a una lista de Python
         face_encoding_list = face_encoding[0].tolist()
@@ -187,19 +199,19 @@ def add_person_to_database():
         # Luego, convierte la lista en una cadena JSON
         face_encoding_json = json.dumps(face_encoding_list)
 
-        # Codificar la imagen en formato base64
-        image_base64 = base64.b64encode(image_data).decode()
-
-
         # Insertar las características faciales y la imagen codificada en la base de datos
-        cursor.execute("INSERT INTO personas (encoding, image) VALUES (%s, %s)", (face_encoding_json, image_base64,))
+        cursor.execute("INSERT INTO personas (nombre, encoding, image) VALUES (%s, %s, %s)", (nombre, face_encoding_json, cropped_image_base64,))
         connection.commit()
         cursor.close()
         connection.close()
 
-        return jsonify({"message": "Características faciales y la imagen han sido almacenadas en la base de datos en formato base64. ADD_PERSON"}), 200
+        return jsonify({"message": "Características faciales y la imagen han sido almacenadas en la base de datos."}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+
+
     
 # Ruta para comparar una imagen con las características faciales de la base de datos
 @app.route('/compare', methods=['POST', 'GET'])
@@ -209,7 +221,20 @@ def compare_with_database():
 
         # Leer los datos binarios de la imagen directamente desde la solicitud
         image_data = file.read()
+
+        # Cargar la imagen de la persona desde datos binarios
+        image = face_recognition.api.load_image_file(BytesIO(image_data))
+        face_locations = face_recognition.face_locations(image)
         
+        if not face_locations:
+            return jsonify({"message": "No se encontraron rostros en la imagen."}), 400
+
+        # Obtener las coordenadas del primer rostro y recortar la imagen
+        top, right, bottom, left = face_locations[0]
+        cropped_face = image[top:bottom, left:right].copy()  # Utiliza copy() para crear una copia C-contigua
+
+
+
         # Cargar la imagen para comparación
         image = face_recognition.load_image_file(file)
         face_encoding_to_compare = face_recognition.face_encodings(image)
@@ -268,10 +293,13 @@ def compare_with_database():
         # Luego, convierte la lista en una cadena JSON
         face_encoding_json = json.dumps(face_encoding_list)
 
-        # Codificar la imagen en formato base64
-        image_base64 = base64.b64encode(image_data).decode()
+        image_pil = Image.fromarray(cropped_face)
+        buffer = BytesIO()
+        image_pil.save(buffer, format="JPEG")
+        cropped_image_base64 = base64.b64encode(buffer.getvalue()).decode()    
 
-        cursor.execute("INSERT INTO intentos_autenticacion (encoding, imagen, fecha_hora) VALUES (%s, %s, %s)",(face_encoding_json, image_base64, current_datetime))
+
+        cursor.execute("INSERT INTO intentos_autenticacion (encoding, imagen, fecha_hora) VALUES (%s, %s, %s)",(face_encoding_json, cropped_image_base64, current_datetime))
 
         connection.commit()
 
