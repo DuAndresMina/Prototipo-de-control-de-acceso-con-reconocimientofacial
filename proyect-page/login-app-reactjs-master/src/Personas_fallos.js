@@ -21,20 +21,20 @@ function Personas_fallos(props) {
   }, []);
 
   return (
-    <div className="App">
-      <h1>Intentos Fallidos de Autenticación</h1>
+    <div className="App" style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <h1 style={{ textAlign: 'center' }}>Intentos Fallidos de Autenticación</h1>
       <table>
         <thead>
           <tr>
-            <th>Fecha y Hora</th>
-            <th>Imagen</th>
+            <th style={{ textAlign: 'center' }}>Fecha y Hora</th>
+            <th style={{ textAlign: 'center' }}>Imagen</th>
           </tr>
         </thead>
         <tbody>
           {failedAttempts.map((attempt, index) => (
             <tr key={index}>
-              <td>{attempt.fecha_hora}</td>
-              <td>
+              <td style={{ textAlign: 'center' }}>{attempt.fecha_hora}</td>
+              <td style={{ textAlign: 'center' }}>
                 {attempt.imagen && (
                   <img
                     src={`data:image/jpeg;base64,${attempt.imagen}`}
