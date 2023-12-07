@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './person_auten.css';
-import { getUser, removeUserSession } from './Utils/Common';
 
 function Autenticaciones(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [authRecords, setAuthRecords] = useState([]);
-  const [authRecordIdToDelete, setAuthRecordIdToDelete] = useState('');
 
-    // handle click event of logout button
-  const handleLogout = () => {
-    removeUserSession();
-    props.history.push('/');
-  }
 
   useEffect(() => {
     // Reemplaza 'localhost' con la dirección IP de tu servidor Flask
@@ -36,28 +29,11 @@ function Autenticaciones(props) {
     setSearchTerm(searchTerm);
   };
 
-  const handleDeleteAuthRecord = () => {
-    // Reemplaza 'localhost' con la dirección IP de tu servidor Flask
-    const serverIp = '192.168.20.2'; // Ejemplo: '192.168.1.100'
-
-    // Realiza una solicitud DELETE al servidor Flask para eliminar un registro de autenticación por su ID
-    axios.delete(`http://${serverIp}:8000/api/delete_auth_record`, {
-      data: { id: authRecordIdToDelete },
-    })
-      .then(response => {
-        // Actualiza la lista de registros después de la eliminación
-        setAuthRecords(authRecords.filter(record => record.id !== authRecordIdToDelete));
-        setAuthRecordIdToDelete('');
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
 
   return (
-    <div className="App">
-      <h1>Buscar Registros de Autenticación por ID de Persona o Nombre</h1>
-      <div>
+    <div className="App" style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <h1 style={{ textAlign: 'center' }}>Buscar Registros de Autenticación por ID de Persona o Nombre</h1>
+      <div style={{ textAlign: 'center' }}>
         <label>Buscar por ID o Nombre:</label>
         <input
           type="text"
@@ -68,17 +44,17 @@ function Autenticaciones(props) {
         <button onClick={handleSearch}>Buscar</button>
       </div>
       <table>
-        <thead>
-          <tr>
-            <th>Fecha y Hora</th>
-            <th>Foto de la Persona</th>
+        <thead >
+          <tr style={{ textAlign: 'center' }}>
+            <th style={{ textAlign: 'center' }}>Fecha y Hora</th>
+            <th style={{ textAlign: 'center' }}>Foto de la Persona</th>
           </tr>
         </thead>
         <tbody>
           {authRecords.map((record, index) => (
             <tr key={index}>
-              <td>{record.fecha_hora}</td>
-              <td>
+              <td style={{ textAlign: 'center' }}>{record.fecha_hora}</td>
+              <td style={{ textAlign: 'center' }}>
                 {record.image && (
                   <img
                     src={`data:image/jpeg;base64,${record.image}`}
