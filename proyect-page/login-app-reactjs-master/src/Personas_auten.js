@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Typography, Container, Table, TableHead, TableBody, TableRow, TableCell, TextField, Button, Paper } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import './person_auten.css';
 
 function Autenticaciones(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [authRecords, setAuthRecords] = useState([]);
 
-
   useEffect(() => {
-    // Reemplaza 'localhost' con la dirección IP de tu servidor Flask
-    const serverIp = '192.168.20.2'; // Ejemplo: '192.168.1.100'
+    fetchData();
+  }, [searchTerm]);
 
-    // Realiza una solicitud GET al servidor Flask para buscar registros por person_id o nombre
+  const fetchData = () => {
+    const serverIp = '192.168.20.2';
     axios.get(`http://${serverIp}:8000/api/get_auth_records_by_id`, {
       params: {
         query: searchTerm,
@@ -23,38 +25,45 @@ function Autenticaciones(props) {
       .catch(error => {
         console.error(error);
       });
-  }, [searchTerm]);
-
-  const handleSearch = () => {
-    setSearchTerm(searchTerm);
   };
 
+  const handleSearch = () => {
+    fetchData();
+  };
 
   return (
-    <div className="App" style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ textAlign: 'center' }}>Buscar Registros de Autenticación por ID de Persona o Nombre</h1>
-      <div style={{ textAlign: 'center' }}>
-        <label>Buscar por ID o Nombre:</label>
-        <input
-          type="text"
-          placeholder="Ingresa el ID o el nombre de la persona"
+    <Container maxWidth="md">
+      <Typography variant="h4" align="center" gutterBottom>
+        Buscar Registros de Autenticación por ID de Persona o Nombre
+      </Typography>
+      <div className="search-container">
+        <TextField
+          label="Buscar por ID o Nombre"
+          fullWidth
           value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>Buscar</button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSearch}
+          startIcon={<SearchIcon />}
+        >
+          Buscar
+        </Button>
       </div>
-      <table>
-        <thead >
-          <tr style={{ textAlign: 'center' }}>
-            <th style={{ textAlign: 'center' }}>Fecha y Hora</th>
-            <th style={{ textAlign: 'center' }}>Foto de la Persona</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Table component={Paper} sx={{ marginTop: '20px' }}>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">Fecha y Hora</TableCell>
+            <TableCell align="center">Foto de la Persona</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {authRecords.map((record, index) => (
-            <tr key={index}>
-              <td style={{ textAlign: 'center' }}>{record.fecha_hora}</td>
-              <td style={{ textAlign: 'center' }}>
+            <TableRow key={index}>
+              <TableCell align="center">{record.fecha_hora}</TableCell>
+              <TableCell align="center">
                 {record.image && (
                   <img
                     src={`data:image/jpeg;base64,${record.image}`}
@@ -62,12 +71,12 @@ function Autenticaciones(props) {
                     style={{ width: '100px', height: 'auto' }}
                   />
                 )}
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </Container>
   );
 }
 
