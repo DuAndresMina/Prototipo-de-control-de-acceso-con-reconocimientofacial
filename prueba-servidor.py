@@ -38,7 +38,7 @@ def is_person_in_database(new_face_encoding, connection):
     for row in rows:
         encoding_str = row[0]
         encoding = json.loads(encoding_str)  # Cargar la cadena JSON en una lista de Python
-        results = face_recognition.compare_faces([encoding], new_face_encoding)
+        results = face_recognition.compare_faces([encoding], new_face_encoding, tolerance=0.49)
 
         # Si se encuentra una coincidencia, la persona ya está en la base de datos
         if any(results):
@@ -257,7 +257,7 @@ def compare_with_database():
         for row in rows:
             person_id, encoding_str = row[0], row[1]
             encoding = json.loads(encoding_str)  # Cargar la cadena JSON en una lista de Python
-            comparison_results = face_recognition.compare_faces([encoding], face_encoding_to_compare[0])
+            comparison_results = face_recognition.compare_faces([encoding], face_encoding_to_compare[0], tolerance=0.49)
 
             # Si se encuentra una coincidencia, agrega el resultado a la lista de resultados
             if any(comparison_results):
