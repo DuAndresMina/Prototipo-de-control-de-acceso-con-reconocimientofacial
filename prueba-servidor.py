@@ -1,12 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import request, jsonify
 import face_recognition
 import mysql.connector
 import json
-from flask import Flask, render_template
+from flask import Flask
 import base64
 from datetime import datetime  # Importa la clase datetime
 import pytz
-from mysql.connector import Error
 from flask_cors import CORS  # Importa CORS
 from flask_socketio import SocketIO, emit
 app = Flask(__name__)
