@@ -24,8 +24,8 @@ function Personas(props) {
   }, []);
 
   const fetchData = () => {
-    const serverIp = '192.168.20.2';
-    axios.get(`http://${serverIp}:8000/api/get_person_data`)
+    const serverIp = 'DIRECCIÓN_IP';
+    axios.get(`http://${serverIp}:PORT/api/get_person_data`)
       .then(response => {
         setPersonData(response.data);
       })
@@ -35,10 +35,10 @@ function Personas(props) {
   };
 
   const handleUpdatePerson = (id) => {
-    const serverIp = '192.168.20.2';
+    const serverIp = 'DIRECCIÓN_IP';
     const newName = newNames[id];
 
-    axios.put(`http://${serverIp}:8000/api/get_person_data`, {
+    axios.put(`http://${serverIp}:PORT/api/get_person_data`, {
       id: id,
       nombre: newName,
     })
@@ -63,13 +63,13 @@ function Personas(props) {
     // Verifica si la confirmación está marcada
     if (confirmationChecked) {
       // Elimina la persona si la confirmación está marcada
-      const serverIp = '192.168.20.2';
+      const serverIp = 'DIRECCIÓN_IP';
 
       // Primero, eliminar los registros asociados a la persona
-      axios.delete(`http://${serverIp}:8000/api/delete_auth_records/${personToDelete}`)
+      axios.delete(`http://${serverIp}:PORT/api/delete_auth_records/${personToDelete}`)
         .then(response => {
           // Luego, eliminar la persona
-          axios.delete(`http://${serverIp}:8000/api/delete_person/${personToDelete}`)
+          axios.delete(`http://${serverIp}:PORT/api/delete_person/${personToDelete}`)
             .then(response => {
               fetchData();  // Vuelve a cargar los datos después de la eliminación
             })
