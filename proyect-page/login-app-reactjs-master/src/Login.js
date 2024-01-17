@@ -12,14 +12,15 @@ function Login(props) {
   const handleLogin = () => {
     setError(null);
     setLoading(true);
-    axios.post('http://localhost:4000/users/signin', { username: username.value, password: password.value }).then(response => {
+    const serverIp = '192.168.20.2';
+    axios.post('http://${serverIp}:4000/users/signin', { username: username.value, password: password.value }).then(response => {
       setLoading(false);
       setUserSession(response.data.token, response.data.user);
       props.history.push('/dashboard');
     }).catch(error => {
       setLoading(false);
       if (error.response.status === 400) setError(error.response.data.message);
-      else setError("Something went wrong. Please try again later.");
+      else setError("Se presento un problema para iniciar sesión.");
     });
   }
 
@@ -28,11 +29,9 @@ function Login(props) {
       Login<br /><br />
       <div>
         Username<br />
-        <input type="text" {...username} autoComplete="new-password" />
       </div>
       <div style={{ marginTop: 10 }}>
         Password<br />
-        <input type="password" {...password} autoComplete="new-password" />
       </div>
       {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
       <input type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} disabled={loading} /><br />
