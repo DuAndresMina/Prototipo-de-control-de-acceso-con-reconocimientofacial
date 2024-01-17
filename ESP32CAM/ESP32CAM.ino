@@ -7,7 +7,7 @@
 
 String getBody;
 String getAll;
-const char* api_key = "nFynI3qitAdo0xrPPXTXiB9MpbtKOqFr";
+const char* api_key = "API_KEY";
 
 
 #define PWDN_GPIO_NUM 32
