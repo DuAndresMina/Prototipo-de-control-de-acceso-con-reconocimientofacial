@@ -29,7 +29,7 @@ const handleLogout = () => {
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className="nav-item">
             <NavLink to="/" exact className="nav-links" onClick={handleClick}>
-              Home
+              Inicio
             </NavLink>
           </li>
           <li className="nav-item">
@@ -47,15 +47,11 @@ const handleLogout = () => {
               Agregar Persona
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink to="/Invalidos" exact className="nav-links" onClick={handleClick}>
-              Registros Inválidos
-            </NavLink>
-          </li>
+    
           {user ? (
             <li className="nav-item">
               <input 
-              type="button" onClick={handleLogout} value="Logout" className="logout-button"/>
+              type="button" onClick={handleLogout} value="Cerrar Sesión" className="logout-button"/>
             </li>
           ) : null}
         </ul>
