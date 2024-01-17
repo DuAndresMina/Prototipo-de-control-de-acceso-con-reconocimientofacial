@@ -328,4 +328,4 @@ def compare_with_database():
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.20.2', port=8000)
+    app.run(host='0.0.0.0', port=port)
