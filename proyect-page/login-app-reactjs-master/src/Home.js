@@ -22,7 +22,7 @@ function Home(props) {
     setLoading(true);
 
     axios
-      .post('http://localhost:4000/users/signin', {
+      .post('http://192.168.20.2:4000/users/signin', { //MODIFICAR IP
         username: username.value,
         password: password.value,
       })
@@ -36,7 +36,7 @@ function Home(props) {
         if (error.response && error.response.status === 400) {
           setError(error.response.data.message);
         } else {
-          setError('Something went wrong. Please try again later.');
+          setError('El usuario o la contraseña son incorrectos, por favor validar de nuevo.');
         }
       });
   };
@@ -50,27 +50,25 @@ function Home(props) {
     <Container>
       {user ? (
         <Box textAlign="center">
-          <Typography variant="h4">Welcome, {user.name}!</Typography>
+          <Typography variant="h4">¡Bienvenidos!</Typography>
           <Button variant="contained" color="primary" onClick={handleLogout}>
             Logout
           </Button>
         </Box>
       ) : (
         <Box textAlign="center">
-          <Typography variant="h4">Welcome to the Home Page!</Typography>
+          <Typography variant="h4">¡Bienvenidos!</Typography>
           <Box component="form" sx={{ mt: 2 }}>
             <TextField
-              label="Username"
+              label="Usuario"
               type="text"
               {...username}
-              autoComplete="new-password"
               sx={{ mb: 2 }}
             />
             <TextField
-              label="Password"
+              label="Contraseña"
               type="password"
               {...password}
-              autoComplete="new-password"
               sx={{ mb: 2 }}
             />
             {error && <Typography color="error">{error}</Typography>}
