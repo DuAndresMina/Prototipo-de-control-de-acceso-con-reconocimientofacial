@@ -15,12 +15,14 @@ const port = process.env.PORT || 4000;
 
 // Configura los detalles de la conexión a la base de datos
 const dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: 'duvanlolZ245@',
-  database: 'user_data',
-  isAdmin: true
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  isAdmin: process.env.DB_ADMIN === 'true', // Asumiendo que DB_ADMIN será 'true' o 'false' en el .env
 };
+
+module.exports = dbConfig;
 
 const dbConnection = mysql.createConnection(dbConfig);
 
@@ -91,7 +93,6 @@ app.get('/', (req, res) => {
   });
 });
 
-// validate the user credentials
 app.post('/users/signin', function (req, res) {
   const user = req.body.username;
   const pwd = req.body.password;
@@ -99,7 +100,7 @@ app.post('/users/signin', function (req, res) {
   if (!user || !pwd) {
     return res.status(400).json({
       error: true,
-      message: "Username or Password required."
+      message: "Usuario o contraseña son necesarios."
     });
   }
 
@@ -112,7 +113,7 @@ app.post('/users/signin', function (req, res) {
     if (results.length === 0) {
       return res.status(401).json({
         error: true,
-        message: "Username or Password is Wrong."
+        message: "Usuario o contrañesa son incorrectos."
       });
     }
 
@@ -129,21 +130,20 @@ app.post('/users/signin', function (req, res) {
 
 
 
-// verify the token and return it if it's valid
 app.get('/verifyToken', function (req, res) {
-  // check header or url parameters or post parameters for token
+
   var token = req.body.token || req.query.token;
   if (!token) {
     return res.status(400).json({
       error: true,
-      message: "Token is required."
+      message: "Token es necesario."
     });
   }
   // check token that was passed by decoding token using secret
   jwt.verify(token, process.env.JWT_SECRET, function (err, user) {
     if (err) return res.status(401).json({
       error: true,
-      message: "Invalid token."
+      message: "Token inválido."
     });
 
     // Realizar una consulta SQL para obtener el usuario correspondiente al userId en el token
@@ -159,7 +159,7 @@ app.get('/verifyToken', function (req, res) {
       if (results.length === 0) {
         return res.status(401).json({
           error: true,
-          message: "Invalid user."
+          message: "Usuario inválido."
         });
       }
 
