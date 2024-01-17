@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, Container, Table, TableHead, TableBody, TableRow, TableCell, TextField, Button, Paper } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import './person_auten.css';
+
 
 function Autenticaciones(props) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -43,14 +43,6 @@ function Autenticaciones(props) {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSearch}
-          startIcon={<SearchIcon />}
-        >
-          Buscar
-        </Button>
       </div>
       <Table component={Paper} sx={{ marginTop: '20px' }}>
         <TableHead>
