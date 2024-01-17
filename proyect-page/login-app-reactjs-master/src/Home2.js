@@ -14,7 +14,7 @@ function Home2(props) {
   return (
     <Container maxWidth="md" sx={{ textAlign: 'center', marginTop: '50px' }}>
       <Typography variant="h4" gutterBottom>
-        Welcome, {user.name}!
+        ¡Bienvenidos!
       </Typography>
       {/* Agrega aquí la interfaz que deseas mostrar después de iniciar sesión */}
     </Container>
