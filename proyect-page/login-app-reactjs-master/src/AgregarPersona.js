@@ -22,8 +22,8 @@ function AgregarPersona(props) {
       formData.append('imageFile', imagenFile);
 
       // Realizar la solicitud POST al endpoint de Flask
-      const serverIp = '192.168.20.2';
-      const response = await axios.post('http://${serverIp}:8000/api/add_person_react', formData);
+      const serverIp = 'DIRECCIÓN_IP';
+      const response = await axios.post('http://${serverIp}:PORT/api/add_person_react', formData);
 
       setMensaje(response.data.message);
       setError('');
