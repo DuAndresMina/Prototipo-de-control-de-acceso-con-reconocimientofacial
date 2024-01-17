@@ -12,7 +12,7 @@ function Login(props) {
   const handleLogin = () => {
     setError(null);
     setLoading(true);
-    const serverIp = '192.168.20.2';
+    const serverIp = 'DIRECCIÓN_IP';
     axios.post('http://${serverIp}:4000/users/signin', { username: username.value, password: password.value }).then(response => {
       setLoading(false);
       setUserSession(response.data.token, response.data.user);
