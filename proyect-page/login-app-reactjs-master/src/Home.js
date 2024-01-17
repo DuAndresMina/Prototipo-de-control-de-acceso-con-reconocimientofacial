@@ -22,7 +22,7 @@ function Home(props) {
     setLoading(true);
 
     axios
-      .post('http://192.168.20.2:4000/users/signin', { //MODIFICAR IP
+      .post('http://DIRECCIÓN_IP:4000/users/signin', { //MODIFICAR IP
         username: username.value,
         password: password.value,
       })
