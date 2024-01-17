@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Typography, Container, Table, TableHead, TableBody, TableRow, TableCell, TextField, Button, Avatar, Paper } from '@mui/material';
+import { Typography, Container, Table, TableHead, TableBody, TableRow, TableCell, TextField, Button, Avatar, Paper, Dialog, DialogTitle, DialogContent, DialogActions, Checkbox, FormControlLabel } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 
-import './person_data.css'; // Import the CSS file
-
 function Personas(props) {
+  const [personToDelete, setPersonToDelete] = useState(null);
   const [personData, setPersonData] = useState([]);
   const [newNames, setNewNames] = useState({});
+  const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
+  const [confirmationChecked, setConfirmationChecked] = useState(false);
+
+  const handleNewNameChange = (id, value) => {
+    setNewNames(prevState => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
 
   useEffect(() => {
     fetchData();
@@ -42,11 +50,42 @@ function Personas(props) {
       });
   };
 
-  const handleNewNameChange = (id, value) => {
-    setNewNames(prevState => ({
-      ...prevState,
-      [id]: value,
-    }));
+  const handleDeletePerson = (id) => {
+    // Abrir el diálogo de confirmación
+    setPersonToDelete(id);
+    setConfirmationDialogOpen(true);
+  };
+
+  const confirmDeletion = () => {
+    // Cierra el diálogo de confirmación
+    setConfirmationDialogOpen(false);
+
+    // Verifica si la confirmación está marcada
+    if (confirmationChecked) {
+      // Elimina la persona si la confirmación está marcada
+      const serverIp = '192.168.20.2';
+
+      // Primero, eliminar los registros asociados a la persona
+      axios.delete(`http://${serverIp}:8000/api/delete_auth_records/${personToDelete}`)
+        .then(response => {
+          // Luego, eliminar la persona
+          axios.delete(`http://${serverIp}:8000/api/delete_person/${personToDelete}`)
+            .then(response => {
+              fetchData();  // Vuelve a cargar los datos después de la eliminación
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
+
+  const handleConfirmationCheckboxChange = (event) => {
+    // Maneja el cambio en la confirmación del checkbox
+    setConfirmationChecked(event.target.checked);
   };
 
   return (
@@ -60,7 +99,7 @@ function Personas(props) {
             <TableCell align="center">ID</TableCell>
             <TableCell align="center">Nombre</TableCell>
             <TableCell align="center">Foto</TableCell>
-            <TableCell align="center">Actualizar Nombre</TableCell>
+            <TableCell align="center">Acciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -92,6 +131,14 @@ function Personas(props) {
                 >
                   Actualizar
                 </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleDeletePerson(person.id)}
+                  style={{ marginLeft: '8px' }}
+                >
+                  Eliminar
+                </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -107,6 +154,25 @@ function Personas(props) {
           Actualizar Datos
         </Button>
       </div>
+
+      {/* Diálogo de confirmación */}
+      <Dialog open={confirmationDialogOpen} onClose={() => setConfirmationDialogOpen(false)}>
+        <DialogTitle>Confirmación</DialogTitle>
+        <DialogContent>
+          <FormControlLabel
+            control={<Checkbox checked={confirmationChecked} onChange={handleConfirmationCheckboxChange} />}
+            label="¿Estás seguro que quieres realizar esta acción?"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmationDialogOpen(false)} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={confirmDeletion} color="secondary" disabled={!confirmationChecked}>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
