@@ -17,13 +17,13 @@ function AgregarPersona(props) {
         return;
       }
 
-      // Crear un objeto FormData para enviar el nombre y la imagen como parte del formulario
       const formData = new FormData();
       formData.append('nombre', nombre);
       formData.append('imageFile', imagenFile);
 
       // Realizar la solicitud POST al endpoint de Flask
-      const response = await axios.post('http://192.168.20.2:8000/api/add_person_react', formData);
+      const serverIp = '192.168.20.2';
+      const response = await axios.post('http://${serverIp}:8000/api/add_person_react', formData);
 
       setMensaje(response.data.message);
       setError('');
