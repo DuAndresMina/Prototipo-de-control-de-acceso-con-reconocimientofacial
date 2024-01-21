@@ -7,7 +7,7 @@
 
 String getBody;
 String getAll;
-const char* api_key = "nFynI3qitAdo0xrPPXTXiB9MpbtKOqFr";
+const char* api_key = "API_KEY";
 
 
 #define PWDN_GPIO_NUM 32
@@ -39,13 +39,13 @@ const int echoPin = 2;
 
 
 // Inserta tus credenciales de red
-const char* ssid = "FAMILIA PC";
-const char* password = "L782019JT";
+const char* ssid = "SSID";
+const char* password = "password";
 
 
-const char* serverName = "192.168.20.2";
+const char* serverName = "0.0.0.0";
 
-const int serverPort = 8000;
+const int serverPort = port;
 
 
 const char* serverPath = "/compare";

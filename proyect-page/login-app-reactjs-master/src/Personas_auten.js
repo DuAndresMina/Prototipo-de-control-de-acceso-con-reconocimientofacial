@@ -13,8 +13,8 @@ function Autenticaciones(props) {
   }, [searchTerm]);
 
   const fetchData = () => {
-    const serverIp = '192.168.20.2';
-    axios.get(`http://${serverIp}:8000/api/get_auth_records_by_id`, {
+    const serverIp = 'DIRECCIÓN_IP';
+    axios.get(`http://${serverIp}:PORT/api/get_auth_records_by_id`, {
       params: {
         query: searchTerm,
       },
