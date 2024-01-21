@@ -4,9 +4,9 @@ import mysql.connector
 import json
 from flask import Flask
 import base64
-from datetime import datetime  # Importa la clase datetime
+from datetime import datetime  
 import pytz
-from flask_cors import CORS  # Importa CORS
+from flask_cors import CORS  
 from flask_socketio import SocketIO, emit
 from io import BytesIO
 from PIL import Image
