@@ -31,6 +31,7 @@ Asegúrate de configurar correctamente las siguientes variables de entorno en tu
 
 `PORT`: Puerto en el que se ejecutará el servidor (por defecto, 4000).
 `DB_HOST`, `DB_USER, `DB_PASSWORD`, `DB_DATABASE`: Configuración de la base de datos MySQL.
+
 `JWT_SECRET`: Clave secreta para la generación de tokens JWT. (por defecto, ABCDEF$123).
 
 ## Contribuciones y Agradecimientos
