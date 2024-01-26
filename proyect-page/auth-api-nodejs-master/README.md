@@ -25,3 +25,13 @@ Ejecuta el siguiente comando para iniciar el servidor:
 ```bash
 npm start
 ```
+
+## Variables de Entorno
+Asegúrate de configurar correctamente las siguientes variables de entorno en tu archivo .env:
+
+PORT: Puerto en el que se ejecutará el servidor (por defecto, 4000).
+DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE: Configuración de la base de datos MySQL.
+JWT_SECRET: Clave secreta para la generación de tokens JWT. (por defecto, ABCDEF$123).
+
+## Contribuciones y Agradecimientos
+Este proyecto se basa en el trabajo inicial de cluemediator. Agradecemos a la comunidad de código abierto y a todos aquellos que han contribuido a este proyecto.
