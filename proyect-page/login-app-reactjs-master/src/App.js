@@ -25,8 +25,9 @@ function App() {
       setAuthLoading(false);
       return;
     }
-    const serverIp = '192.168.20.2';
-    axios.get(`http://${serverIp}:4000/verifyToken?token=${token}`).then(response => {
+    const serverIp = process.env.REACT_APP_SERVER_IP;
+    axios.get(`http://${serverIp}:4000/verifyToken?token=${token}`)
+    .then(response => {
       console.log('Respuesta del servidor:', response);
 
       if (response.data && response.data.token && response.data.user) {
