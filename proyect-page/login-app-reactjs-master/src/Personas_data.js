@@ -4,13 +4,14 @@ import { Typography, Container, Table, TableHead, TableBody, TableRow, TableCell
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-
 function Personas(props) {
   const [personToDelete, setPersonToDelete] = useState(null);
   const [personData, setPersonData] = useState([]);
   const [newNames, setNewNames] = useState({});
   const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
   const [confirmationChecked, setConfirmationChecked] = useState(false);
+  const serverIp = process.env.REACT_APP_SERVER_IP;
+  const serverPort = process.env.REACT_APP_SERVER_PORT;
 
   const handleNewNameChange = (id, value) => {
     setNewNames(prevState => ({
@@ -24,8 +25,8 @@ function Personas(props) {
   }, []);
 
   const fetchData = () => {
-    const serverIp = 'DIRECCIÓN_IP';
-    axios.get(`http://${serverIp}:PORT/api/get_person_data`)
+
+    axios.get(`http://${serverIp}:${serverPort}/api/get_person_data`)
       .then(response => {
         setPersonData(response.data);
       })
@@ -35,10 +36,9 @@ function Personas(props) {
   };
 
   const handleUpdatePerson = (id) => {
-    const serverIp = 'DIRECCIÓN_IP';
     const newName = newNames[id];
 
-    axios.put(`http://${serverIp}:PORT/api/get_person_data`, {
+    axios.put(`http://${serverIp}:${serverPort}/api/get_person_data`, {
       id: id,
       nombre: newName,
     })
@@ -63,13 +63,12 @@ function Personas(props) {
     // Verifica si la confirmación está marcada
     if (confirmationChecked) {
       // Elimina la persona si la confirmación está marcada
-      const serverIp = 'DIRECCIÓN_IP';
 
       // Primero, eliminar los registros asociados a la persona
-      axios.delete(`http://${serverIp}:PORT/api/delete_auth_records/${personToDelete}`)
+      axios.delete(`http://${serverIp}:${serverPort}/api/delete_auth_records/${personToDelete}`)
         .then(response => {
           // Luego, eliminar la persona
-          axios.delete(`http://${serverIp}:PORT/api/delete_person/${personToDelete}`)
+          axios.delete(`http://${serverIp}:${serverPort}/api/delete_person/${personToDelete}`)
             .then(response => {
               fetchData();  // Vuelve a cargar los datos después de la eliminación
             })
