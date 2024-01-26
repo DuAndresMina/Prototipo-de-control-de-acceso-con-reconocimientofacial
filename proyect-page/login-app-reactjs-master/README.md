@@ -1,25 +1,28 @@
-# login-app-reactjs
-Example: How to create login form in ReactJS using secure REST API
+# Página de Login en React
 
-Please check the below link for step by step tutorial
-**https://www.cluemediator.com/login-app-create-login-form-in-reactjs-using-secure-rest-api-part-3**
+Este proyecto es una aplicación web en React que proporciona funcionalidades de autenticación. Está basado en el trabajo inicial de [cluemediator](https://github.com/cluemediator/login-app-reactjs), al cual agradecemos por su contribución.
 
-## Setup
-Follow below steps to run project
+## Instrucciones de Uso
 
-1. Clone repository
-2. Run `npm i` command to install dependencies
-3. Execute `npm start` command to run the project
+### Requisitos Previos
+Asegúrate de tener [Node.js](https://nodejs.org/) instalado en tu máquina.
 
-## Output 
-[![Login App](https://www.cluemediator.com/wp-content/uploads/2019/12/output-create-login-form-in-reactjs-using-secure-rest-api-clue-mediator.gif)](https://www.cluemediator.com/login-app-create-login-form-in-reactjs-using-secure-rest-api)
+### Clonar y Configurar el Proyecto
+1. Clona este repositorio en tu máquina local.
+2. Navega al directorio del proyecto.
 
-**Follow us on [GitHub](https://github.com/cluemediator) for more update.**
+```bash
+cd login-app-reactjs
+```
 
-### Connect with us
-Website: [Clue Mediator](https://www.cluemediator.com)  
-Like us on [Facebook](https://www.facebook.com/thecluemediator)  
-Follow us on [Twitter](https://twitter.com/cluemediator)  
-Join us on [Telegram](https://t.me/cluemediator)  
-Subscribe us on [YouTube](https://www.youtube.com/ClueMediator)  
-Follow us on [Instagram](https://www.instagram.com/clue_mediator)
+### Instalación de Dependencias
+Ejecuta el siguiente comando para instalar las dependencias:
+
+```bash
+npm install
+```
+Iniciar la Aplicación
+Ejecuta el siguiente comando para iniciar la aplicación:
+
+### Contribuciones y Agradecimientos
+Este proyecto se basa en el trabajo inicial de cluemediator. Agradecemos a la comunidad de código abierto y a todos aquellos que han contribuido a este proyecto.
