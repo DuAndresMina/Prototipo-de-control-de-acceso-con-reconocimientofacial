@@ -35,3 +35,9 @@ Ejecuta el siguiente comando para instalar las dependencias:
 
 ```bash
 npm install
+
+### Iniciar el Servidor
+Ejecuta el siguiente comando para iniciar el servidor:
+
+```bash
+npm start
