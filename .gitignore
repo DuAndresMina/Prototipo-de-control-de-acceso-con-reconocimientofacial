@@ -8,3 +8,4 @@ react2-auten.ps1
 react2-auten.vbs
 .env
 node_modules
+/__pycache__
