@@ -328,4 +328,4 @@ def compare_with_database():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port)
+    app.run(os.environ.get('IP_Global'), os.environ.get('PORT'))
