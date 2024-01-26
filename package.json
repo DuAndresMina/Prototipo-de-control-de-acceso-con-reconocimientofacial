@@ -1,9 +1,0 @@
-{
-    "scripts": {
-        "start-auth-api": "cd proyect-page/auth-api-nodejs-master && npm start",
-        "start-login-app": "cd proyect-page/login-app-reactjs-master && npm start"
-    },
-    "dependencies": {
-        "dotenv": "^16.3.1"
-    }
-}
