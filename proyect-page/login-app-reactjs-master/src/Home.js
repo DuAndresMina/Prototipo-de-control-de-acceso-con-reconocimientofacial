@@ -20,12 +20,11 @@ function Home(props) {
   const handleLogin = () => {
     setError(null);
     setLoading(true);
-
-    axios
-      .post('http://DIRECCIÓN_IP:4000/users/signin', { //MODIFICAR IP
-        username: username.value,
-        password: password.value,
-      })
+    const serverIp = process.env.REACT_APP_SERVER_IP;
+    axios.post(`http://${serverIp}:4000/users/signin`, {
+    username: username.value,
+    password: password.value
+    })
       .then((response) => {
         setLoading(false);
         setUserSession(response.data.token, response.data.user);
