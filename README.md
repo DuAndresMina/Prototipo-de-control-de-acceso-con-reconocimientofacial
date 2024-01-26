@@ -45,15 +45,7 @@ A continuación, se detallan los pasos necesarios para configurar cada component
 
 3. **Instalación de Dependencias:**
    - Ejecuta `pip install -r requirements.txt` para instalar las dependencias del servidor Flask.
-  
-`Flask==2.1.0
-flask-cors==3.0.10
-flask-socketio==5.0.1
-face-recognition==1.3.0
-mysql-connector-python==8.0.28
-python-dotenv==0.19.0
-pillow==8.4.0
-pytz==2021.3`
+
 
 4. **Ejecución del Servidor:**
    - Ejecuta `python server.py` para iniciar el servidor Flask.
