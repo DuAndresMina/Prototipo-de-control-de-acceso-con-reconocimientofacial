@@ -7,8 +7,9 @@ function AgregarPersona(props) {
   const [imagenFile, setImagenFile] = useState(null);
   const [imagenPreview, setImagenPreview] = useState(null);
   const [mensaje, setMensaje] = useState('');
-  const [error, setError] = useState('');
-
+  const [error, setError] = useState(''); 
+  const serverIp = process.env.REACT_APP_SERVER_IP;
+  const serverPort = process.env.REACT_APP_SERVER_PORT;
   const handleAgregarPersona = async () => {
     try {
       // Validaciones básicas
@@ -22,8 +23,7 @@ function AgregarPersona(props) {
       formData.append('imageFile', imagenFile);
 
       // Realizar la solicitud POST al endpoint de Flask
-      const serverIp = 'DIRECCIÓN_IP';
-      const response = await axios.post('http://${serverIp}:PORT/api/add_person_react', formData);
+      const response = await axios.post(`http://${serverIp}:${serverPort}/api/add_person_react`, formData);
 
       setMensaje(response.data.message);
       setError('');
