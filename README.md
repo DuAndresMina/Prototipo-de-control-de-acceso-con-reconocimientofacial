@@ -1,4 +1,5 @@
-# Sistema de Verificación Facial con ESP32CAM, ESP8266 y Servidor Flask
+# Prototipo de reconocimiento facial para control de acceso
+### Sistema de Reconocimiento Facial con ESP32CAM, ESP8266 y Servidor Flask
 
 Este proyecto implementa un sistema de verificación facial que utiliza el módulo ESP32CAM para capturar imágenes, el ESP8266 para mostrar resultados en una pantalla TFT y un servidor Flask para manejar la autenticación facial y la base de datos de encodings faciales.
 
