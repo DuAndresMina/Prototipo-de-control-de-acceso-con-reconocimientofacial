@@ -15,7 +15,7 @@ Asegúrate de tener [Node.js](https://nodejs.org/) instalado en tu máquina.
 cd login-app-reactjs
 ```
 
-###Instalación de Dependencias
+### Instalación de Dependencias
 Ejecuta el siguiente comando para instalar las dependencias:
 
 ```bash
@@ -24,5 +24,5 @@ npm install
 Iniciar la Aplicación
 Ejecuta el siguiente comando para iniciar la aplicación:
 
-###Contribuciones y Agradecimientos
+### Contribuciones y Agradecimientos
 Este proyecto se basa en el trabajo inicial de cluemediator. Agradecemos a la comunidad de código abierto y a todos aquellos que han contribuido a este proyecto.
