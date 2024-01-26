@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { setUserSession } from './Utils/Common';
 
+
 function Login(props) {
   const [loading, setLoading] = useState(false);
   const username = useFormInput('');
@@ -12,8 +13,14 @@ function Login(props) {
   const handleLogin = () => {
     setError(null);
     setLoading(true);
-    const serverIp = 'DIRECCIÓN_IP';
-    axios.post('http://${serverIp}:4000/users/signin', { username: username.value, password: password.value }).then(response => {
+    const serverIp = process.env.REACT_APP_SERVER_IP;
+    console.log(serverIp);
+    axios.post(`http://${serverIp}:4000/users/signin`, {
+    username: username.value,
+    password: password.value
+    })
+    
+    .then(response => {
       setLoading(false);
       setUserSession(response.data.token, response.data.user);
       props.history.push('/dashboard');
