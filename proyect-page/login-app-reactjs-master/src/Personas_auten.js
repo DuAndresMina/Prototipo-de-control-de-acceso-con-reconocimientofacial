@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Typography, Container, Table, TableHead, TableBody, TableRow, TableCell, TextField, Button, Paper } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Typography, Container, Table, TableHead, TableBody, TableRow, TableCell, TextField, Paper } from '@mui/material';
 
 
 function Autenticaciones(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [authRecords, setAuthRecords] = useState([]);
-
+  const serverIp = process.env.REACT_APP_SERVER_IP;
+  const serverPort = process.env.REACT_APP_SERVER_PORT;
   useEffect(() => {
     fetchData();
   }, [searchTerm]);
 
   const fetchData = () => {
-    const serverIp = 'DIRECCIÓN_IP';
-    axios.get(`http://${serverIp}:PORT/api/get_auth_records_by_id`, {
+    axios.get(`http://${serverIp}:${serverPort}/api/get_auth_records_by_id`, {
       params: {
         query: searchTerm,
       },
@@ -25,10 +24,6 @@ function Autenticaciones(props) {
       .catch(error => {
         console.error(error);
       });
-  };
-
-  const handleSearch = () => {
-    fetchData();
   };
 
   return (
