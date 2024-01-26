@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Button } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { getUser, removeUserSession } from './Utils/Common';
 
 function Home2(props) {
