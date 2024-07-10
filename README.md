@@ -19,7 +19,12 @@ Lorem ipsum dolor, sit amet consectetur adipisicing elit. A voluptatum et esse, 
 [![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://es.wikipedia.org/wiki/CSS)
 [![JS](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://es.wikipedia.org/wiki/JavaScript)
 [![MySQL](https://img.shields.io/badge/MySQL-1572B6?style=for-the-badge&logo=MySQL&logoColor=white)](https://es.wikipedia.org/wiki/MySQL)
-
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://es.wikipedia.org/wiki/Python)
+[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)](https://es.wikipedia.org/wiki/Express.js)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://es.wikipedia.org/wiki/react)
+[![Material UI](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)](https://es.wikipedia.org/wiki/Material_Design)
+[![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://es.wikipedia.org/wiki/flask)
+[![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)]([https://es.wikipedia.org/wiki/C](https://es.wikipedia.org/wiki/C_(lenguaje_de_programación)))
 
 ## Vista previa del proyecto
 Si quieres hechas un vistazo al proyecto, te recomiendo:
