@@ -27,7 +27,9 @@ Si quieres hechas un vistazo al proyecto, te recomiendo:
 
 ![Captura del proyecto](https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/IMG_7635.jpg?raw=true)
 ![Captura del proyecto](https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/IMG_7644.jpg?raw=true)
-![Captura del proyecto](https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/img2.png){style="display: block; margin-left: auto; margin-right: auto;"}
+<p align="center">
+  <img src="https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/img2.png" />
+</p>
 
 ## Autor ✒️
 **Duvan Andres Mina Landazuri**
