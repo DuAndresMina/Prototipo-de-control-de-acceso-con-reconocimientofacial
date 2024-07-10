@@ -32,13 +32,12 @@ Si quieres hechas un vistazo al proyecto, te recomiendo:
 </p>
 
 ## Autor ✒️
-**Duvan Andres Mina Landazuri**
-
-Este proyecto fue elaborado junto con [@ajota29](https://github.com/ajota29)
+* **Duvan Andres Mina Landazuri**
+  
+* Este proyecto fue elaborado junto con [@ajota29](https://github.com/ajota29)
 
 * [duvan.andres312@gmail.com](duvan.andres312@gmail.com)
-* [LinkedIn]([https://www.linkedin.com/in/duvan-mina-644b13156/)
-
+* [LinkedIn](https://www.linkedin.com/in/duvan-mina-644b13156/)
 
 ## Licencia 📄
 MIT Public License v3.0
