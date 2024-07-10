@@ -10,7 +10,7 @@ Este proyecto implementa un sistema de verificación facial que utiliza el módu
 Lorem ipsum dolor, sit amet consectetur adipisicing elit. A voluptatum et esse, ipsum ipsam debitis ducimus dolorum placeat? Consectetur, soluta vero. Accusamus iure est pariatur, doloremque nam cumque natus unde adipisci laborum ut. At id sapiente consequatur earum. Magnam doloribus, voluptate zumito doloremque obcaecati vel excepturi numquam cupiditate ipsam quisquam!
 
 ## Tecnologías 🛠
-<!-- Iconos sacados de: https://github.com/hendrasob/badges/blob/master/README.md y https://github.com/alexandresanlim/Badges4-README.md-Profile -->
+<!-- Iconos sacados de: https://dev.to/envoy_/150-badges-for-github-pnk -->
 [![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://es.wikipedia.org/wiki/HTML5)
 [![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://es.wikipedia.org/wiki/CSS)
 [![JS](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://es.wikipedia.org/wiki/JavaScript)
@@ -27,13 +27,12 @@ Si quieres hechas un vistazo al proyecto, te recomiendo:
 
 ![Captura del proyecto](https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/IMG_7635.jpg?raw=true)
 ![Captura del proyecto](https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/IMG_7644.jpg?raw=true)
-<div align="center">
-  ![Captura del proyecto](https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/img2.png?raw=true)
-</div>
+![Captura del proyecto](https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/img2.png){style="display: block; margin-left: auto; margin-right: auto;"}
 
 ## Autor ✒️
 **Duvan Andres Mina Landazuri**
-This project was developed in collaboration with [@ajota29](https://github.com/ajota29)
+
+Este proyecto fue elaborado junto con [@ajota29](https://github.com/ajota29)
 
 * [duvan.andres312@gmail.com](duvan.andres312@gmail.com)
 * [LinkedIn]([https://www.linkedin.com/in/tu-url-de-linkedin/](https://www.linkedin.com/in/duvan-mina-644b13156/))
