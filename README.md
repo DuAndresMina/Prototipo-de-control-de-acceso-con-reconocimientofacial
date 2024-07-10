@@ -1,62 +1,43 @@
 # Prototipo de reconocimiento facial para control de acceso
-### Sistema de Reconocimiento Facial con ESP32CAM, ESP8266 y Servidor Flask
+![Imagen del proyecto](https://github.com/eduardofierropro/Portafolio-y-CV/blob/main/IMAGEN-DEL-PROYECTO.jpg?raw=true)
+
+## Ejemplo en vivo
+- [URL-de-github-pages-de-este-proyecto](URL-de-github-pages-de-este-proyecto)
+- [URL-de-la-api](URL-de-la-api)
+
+## Descripción 📑
 
 Este proyecto implementa un sistema de verificación facial que utiliza el módulo ESP32CAM para capturar imágenes, el ESP8266 para mostrar resultados en una pantalla TFT y un servidor Flask para manejar la autenticación facial y la base de datos de encodings faciales.
 
-## Configuración del Proyecto
+## ¿Qué he aprendido en este proyecto? 🙇🏻 
 
-A continuación, se detallan los pasos necesarios para configurar cada componente del proyecto.
+Lorem ipsum dolor, sit amet consectetur adipisicing elit. A voluptatum et esse, ipsum ipsam debitis ducimus dolorum placeat? Consectetur, soluta vero. Accusamus iure est pariatur, doloremque nam cumque natus unde adipisci laborum ut. At id sapiente consequatur earum. Magnam doloribus, voluptate zumito doloremque obcaecati vel excepturi numquam cupiditate ipsam quisquam!
 
-### ESP32CAM
+## Tecnologías 🛠
+<!-- Iconos sacados de: https://github.com/hendrasob/badges/blob/master/README.md y https://github.com/alexandresanlim/Badges4-README.md-Profile -->
+[![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://es.wikipedia.org/wiki/HTML5)
+[![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://es.wikipedia.org/wiki/CSS)
+[![JS](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://es.wikipedia.org/wiki/JavaScript)
 
-1. **Credenciales de Red:**
-   - Abre el archivo `ESP32CAM.ino` en la carpeta `ESP32CAM`.
-   - Modifica las variables `ssid` y `password` con las credenciales de tu red WiFi.
+## Vista previa del proyecto
+Si quieres hechas un vistazo al proyecto, te recomiendo:
 
-2. **Configuración del Servidor:**
-   - En el mismo archivo, ajusta la variable `serverName` con la dirección del servidor Flask.
-   - Personaliza `serverPort` y `serverPath` según la configuración de tu servidor.
+![Captura del proyecto](https://github.com/eduardofierropro/Portafolio-y-CV/blob/main/CAPTURA-DEL-PROYECTO.jpg?raw=true)
+![Captura del proyecto](https://github.com/eduardofierropro/Portafolio-y-CV/blob/main/CAPTURA-DEL-PROYECTO.jpg?raw=true)
+![Captura del proyecto](https://github.com/eduardofierropro/Portafolio-y-CV/blob/main/CAPTURA-DEL-PROYECTO.jpg?raw=true)
 
-3. **Clave API (Opcional):**
-   - Si utilizas una clave API en el servidor Flask, asegúrate de ajustar la variable `api_key` en el código.
+## Autor ✒️
+**TU NOMBRE**
 
-### ESP8266
+* [micorreo@midominio.com](micorreo@midominio.com)
+* [LinkedIn](https://www.linkedin.com/in/tu-url-de-linkedin/)
+* [Behance](https://www.behance.net/tu-url-de-behance)
+* [Dribble](https://www.dribble.com/tu-url-de-dribble)
+* [Porfolio web](https://tu-dominio.com/)
 
-1. **Configuración de la Pantalla TFT:**
-   - Abre el archivo `ESP8266_Pantalla_ILI9488.ino` en la carpeta `ESP8266_Pantalla_ILI9488`.
-   - Ajusta cualquier configuración relacionada con la pantalla TFT según las especificaciones de tu hardware.
-
-2. **Configuración del Intervalo de Reinicio:**
-   - Modifica la variable `intervaloReinicio` para establecer el intervalo de reinicio del ESP8266.
-
-### Servidor Flask
-
-1. **Configuración de la Base de Datos:**
-   - Asegúrate de tener un servidor MySQL en ejecución.
-   - Crea una base de datos llamada `face_recognition` y ejecuta el script `face_recognition.sql` para crear las tablas necesarias.
-
-2. **Variables de Entorno:**
-   - Crea un archivo `.env` en la raíz del proyecto Flask.
-   - Configura las siguientes variables en el archivo `.env`:
-     - `DB_HOST`: Dirección del servidor de base de datos.
-     - `DB_USER`: Usuario de la base de datos.
-     - `DB_PASSWORD`: Contraseña del usuario.
-     - `DB_DATABASE`: Nombre de la base de datos.
-     - `API_KEY`: Clave API para autenticación (opcional).
-
-3. **Instalación de Dependencias:**
-   - Ejecuta `pip install -r requirements.txt` para instalar las dependencias del servidor Flask.
-
-
-4. **Ejecución del Servidor:**
-   - Ejecuta `python server.py` para iniciar el servidor Flask.
-
-### Base de Datos
-
-1. **Copia de Seguridad:**
-   - En la carpeta `Database_Backup`, encuentra un archivo de copia de seguridad (`face_recognition.sql`).
-   - Utiliza este archivo para restaurar la base de datos en tu servidor MySQL.
-
----
-
-Con estas configuraciones, el sistema debería funcionar correctamente. Asegúrate de seguir estos pasos y personalizar las configuraciones según tus necesidades De ser necesario, revisa nuestro documento de proyecto grado donde contiene todo sobre lo que se realizo https://repositorio.uniajc.edu.co/entities/publication/e5c0ed2f-cf7c-4480-8dd7-146fb97a1ec3.
+## Instalación 
+Este proyecto no necesita de instalación. Simplemente abre la carpeta o haz doble click en el .html
+  
+## Licencia 📄
+MIT Public License v3.0
+No puede usarse comencialmente.
