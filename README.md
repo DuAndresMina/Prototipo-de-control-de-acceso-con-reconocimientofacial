@@ -1,5 +1,5 @@
 # Prototipo de reconocimiento facial para control de acceso
-![Imagen del proyecto](https://github.com/eduardofierropro/Portafolio-y-CV/blob/main/IMAGEN-DEL-PROYECTO.jpg?raw=true)
+![Imagen del proyecto](https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/download.gif?raw=true)
 
 ## Ejemplo en vivo
 - [URL-de-github-pages-de-este-proyecto](URL-de-github-pages-de-este-proyecto)
