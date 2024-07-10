@@ -37,7 +37,7 @@ Si quieres hechas un vistazo al proyecto, te recomiendo:
 Este proyecto fue elaborado junto con [@ajota29](https://github.com/ajota29)
 
 * [duvan.andres312@gmail.com](duvan.andres312@gmail.com)
-* [LinkedIn]([https://www.linkedin.com/in/tu-url-de-linkedin/](https://www.linkedin.com/in/duvan-mina-644b13156/))
+* [LinkedIn]([https://www.linkedin.com/in/duvan-mina-644b13156/)
 
 
 ## Licencia 📄
