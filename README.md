@@ -1,4 +1,4 @@
-# Prototipo de reconocimiento facial para control de acceso
+# Prototipo de control de acceso por medio de reconocimiento facial
 ![Imagen del proyecto](https://github.com/DuAndresMina/Prototipo-de-reconocimiento-facial-para-control-de-acceso/blob/master/download.gif?raw=true)
 
 ## Descripción 📑
