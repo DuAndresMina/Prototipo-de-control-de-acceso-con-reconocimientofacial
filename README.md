@@ -95,7 +95,3 @@ A continuación, se detallan los pasos necesarios para configurar cada component
 
 Con estas configuraciones, el sistema debería funcionar correctamente. Asegúrate de seguir estos pasos y personalizar las configuraciones según tus necesidades De ser necesario, revisa nuestro documento de proyecto grado donde contiene todo sobre lo que se realizo https://repositorio.uniajc.edu.co/entities/publication/e5c0ed2f-cf7c-4480-8dd7-146fb97a1ec3.
 
-
-## Licencia 📄
-MIT Public License v3.0
-No puede usarse comencialmente.
